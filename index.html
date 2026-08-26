@@ -3,215 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code With Kamlesh - Movie Download Portal</title>
+    <title>CGICinema - HD Movies Download</title>
     <style>
-        /* Modern Dark Theme Styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #0f172a;
-            color: #ffffff;
-        }
-
-        /* Top Header Navbar */
-        header {
-            background-color: #1e293b;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #38bdf8;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: #38bdf8;
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: #f43f5e;
-        }
-
-        /* Hero Header Banner */
-        .hero {
-            text-align: center;
-            padding: 35px 20px;
-            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
-        }
-
-        .hero h1 {
-            font-size: 26px;
-            margin-bottom: 8px;
-            color: #f8fafc;
-        }
-
-        .hero p {
-            color: #94a3b8;
-            font-size: 14px;
-        }
-
-        /* Main Movie Content Grid */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #f43f5e;
-            padding-left: 10px;
-        }
-
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        /* Movie Card Design */
-        .movie-card {
-            background-color: #1e293b;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .movie-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #f43f5e;
-            color: white;
-            padding: 4px 8px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-
-        .movie-card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-        }
-
-        .movie-info {
-            padding: 12px;
-        }
-
-        .movie-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .movie-meta {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 12px;
-        }
-
-        /* Download Button */
-        .btn-download {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #38bdf8;
-            color: #0f172a;
-            text-align: center;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .btn-download:active {
-            background-color: #0284c7;
-            color: white;
-        }
-
-        /* Bottom Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #1e293b;
-            margin-top: 40px;
-            font-size: 13px;
-            color: #94a3b8;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b1325; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        header { width: 100%; background-color: #162238; padding: 15px; text-align: center; border-bottom: 2px solid #38bdf8; }
+        .logo { font-size: 24px; font-weight: bold; color: #ffffff; text-decoration: none; }
+        .logo span { color: #f43f5e; }
+        .container { width: 100%; max-width: 500px; padding: 20px 15px; }
+        .section-heading { font-size: 18px; margin: 15px 0; padding-left: 10px; border-left: 4px solid #f43f5e; }
+        .movie-card { background-color: #162238; border-radius: 10px; padding: 15px; margin-bottom: 15px; position: relative; }
+        .badge { position: absolute; top: 15px; right: 15px; background-color: #f43f5e; color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; }
+        .movie-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .movie-meta { font-size: 12px; color: #94a3b8; margin-bottom: 15px; }
+        .btn-download { display: block; width: 100%; padding: 12px; background-color: #38bdf8; color: #0b1325; text-align: center; font-weight: bold; text-decoration: none; border-radius: 6px; }
     </style>
 </head>
 <body>
 
-    <!-- Header Section -->
     <header>
-        <a href="#" class="logo">CodeWith<span>Kamlesh</span></a>
+        <a href="#" class="logo">CGI<span>Cinema</span></a>
     </header>
 
-    <!-- Welcome Banner Section -->
-    <section class="hero">
-        <h1>Latest HD Movies Download</h1>
-        <p>Direct Fast Download Links (480p, 720p, 1080p)</p>
-    </section>
-
-    <!-- Movie List Grid -->
     <div class="container">
-        <h2 class="section-title">Trending Movies</h2>
-        
-        <div class="movie-grid">
-            
-            <!-- Movie 1 -->
-            <div class="movie-card">
-                <span class="movie-badge">1080p</span>
-                <img src="https://via.placeholder.com/300x400?text=Movie+1" alt="Movie Poster">
-                <div class="movie-info">
-                    <div class="movie-title">Action Blockbuster</div>
-                    <div class="movie-meta">Hindi Dual Audio | 1.4 GB</div>
-                    <a href="YOUR_TERABOX_OR_MEGA_LINK_HERE" target="_blank" class="btn-download">Download Movie</a>
-                </div>
-            </div>
+        <div class="section-heading">Latest Uploaded Movies</div>
 
-            <!-- Movie 2 -->
-            <div class="movie-card">
-                <span class="movie-badge">720p</span>
-                <img src="https://via.placeholder.com/300x400?text=Movie+2" alt="Movie Poster">
-                <div class="movie-info">
-                    <div class="movie-title">Sci-Fi Adventure</div>
-                    <div class="movie-meta">Hindi Dubbed | 900 MB</div>
-                    <a href="YOUR_TERABOX_OR_MEGA_LINK_HERE" target="_blank" class="btn-download">Download Movie</a>
-                </div>
-            </div>
-
-            <!-- Movie 3 -->
-            <div class="movie-card">
-                <span class="movie-badge">480p</span>
-                <img src="https://via.placeholder.com/300x400?text=Movie+3" alt="Movie Poster">
-                <div class="movie-info">
-                    <div class="movie-title">Horror Mystery</div>
-                    <div class="movie-meta">Hindi Audio | 450 MB</div>
-                    <a href="YOUR_TERABOX_OR_MEGA_LINK_HERE" target="_blank" class="btn-download">Download Movie</a>
-                </div>
-            </div>
-
+        <!-- MOVIE 1 -->
+        <div class="movie-card">
+            <span class="badge">1080p HD</span>
+            <div class="movie-title">Action Blockbuster Movie</div>
+            <div class="movie-meta">Hindi Dual Audio | 1.4 GB</div>
+            <a href="#" target="_blank" class="btn-download">Download Now</a>
         </div>
-    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Code With Kamlesh. All Rights Reserved.</p>
-    </footer>
+        <!-- MOVIE 2 -->
+        <div class="movie-card">
+            <span class="badge">720p HD</span>
+            <div class="movie-title">Latest Historical Drama</div>
+            <div class="movie-meta">Hindi Audio | 900 MB</div>
+            <a href="#" target="_blank" class="btn-download">Download Now</a>
+        </div>
+
+    </div>
 
 </body>
 </html>
