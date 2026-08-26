@@ -3,50 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGICinema - HD Movies & VIP Access</title>
+    <title>CGICinema - Classic VIP Cinema</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b132b; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', 'Segoe UI', serif; }
+        body { background-color: #0d0f12; color: #e2e8f0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        header { width: 100%; background-color: #1c2541; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff0055; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 20px; font-weight: bold; color: #ffffff; text-decoration: none; }
-        .logo span { color: #ff0055; }
-        .btn-admin { background: #38bdf8; color: #0b132b; border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer; }
-        .owner-badge { background: #10b981; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; display: none; }
+        /* Classic Header */
+        header { width: 100%; background: linear-gradient(180deg, #1a1d24 0%, #0d0f12 100%); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d4af37; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 22px; font-weight: bold; color: #d4af37; text-decoration: none; letter-spacing: 1px; }
+        .logo span { color: #ffffff; }
+        .btn-admin { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 5px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; transition: 0.3s; }
+        .btn-admin:hover { background: #d4af37; color: #000; }
+        .owner-badge { background: #d4af37; color: #000; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; display: none; }
 
-        .container { width: 100%; max-width: 500px; padding: 15px; }
-        .section-title { font-size: 15px; font-weight: bold; margin: 15px 0 10px 0; color: #4cc9f0; }
+        .container { width: 100%; max-width: 520px; padding: 20px 15px; }
+        .section-title { font-size: 16px; font-weight: 600; margin: 20px 0 12px 0; color: #d4af37; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 5px; }
 
-        /* Owner Secret Control Panel */
-        .owner-panel { background: #162447; border: 1px solid #10b981; border-radius: 10px; padding: 15px; margin-bottom: 15px; display: none; }
-        .owner-panel h4 { color: #10b981; font-size: 14px; margin-bottom: 8px; }
-        .owner-panel p { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; }
-        .input-box { width: 100%; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 12px; }
-        .panel-btn { display: block; background: #10b981; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; text-align: center; margin-top: 6px; border: none; cursor: pointer; width: 100%; }
+        /* Owner Typing Settings Panel */
+        .owner-panel { background: #161920; border: 1px solid #d4af37; border-radius: 8px; padding: 15px; margin-bottom: 20px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .owner-panel h4 { color: #d4af37; font-size: 14px; margin-bottom: 10px; font-family: sans-serif; }
+        .input-box { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #2a2e39; background: #0d0f12; color: #fff; font-size: 13px; font-family: sans-serif; }
+        .panel-btn { display: block; background: #d4af37; color: #000; padding: 10px; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; font-family: sans-serif; margin-top: 5px; }
 
-        /* Customer Payment Section */
-        .sub-card { background: linear-gradient(135deg, #ff0055, #7928ca); padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px; }
-        .sub-card h3 { font-size: 16px; margin-bottom: 5px; }
-        .sub-card p { font-size: 12px; margin-bottom: 10px; opacity: 0.9; }
-        .pay-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 13px; }
-        .pay-box img { width: 120px; height: 120px; border-radius: 6px; margin-top: 8px; background: white; padding: 4px; }
+        /* Classic VIP Subscription Card */
+        .sub-card { background: linear-gradient(145deg, #1c2029, #13151b); border: 1px solid #d4af37; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
+        .sub-card h3 { font-size: 18px; color: #d4af37; margin-bottom: 6px; }
+        .sub-card p { font-size: 12px; color: #a0aec0; margin-bottom: 15px; font-family: sans-serif; }
+        .price-tag { font-size: 24px; font-weight: bold; color: #fff; margin-bottom: 15px; }
+        .pay-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 6px; border: 1px dashed rgba(212,175,55,0.4); font-family: sans-serif; font-size: 13px; }
 
-        /* Video Card */
-        .video-card { background-color: #1c2541; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.08); }
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background-color: #000; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .video-details { padding: 12px; }
-        .video-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
-        .video-meta { font-size: 11px; color: #94a3b8; margin-bottom: 10px; }
-
-        .btn-group { display: flex; gap: 6px; }
-        .btn { flex: 1; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 12px; display: block; }
-        .btn-watch { background-color: #ff0055; color: white; }
-        .btn-download { background-color: #4cc9f0; color: #0b132b; }
+        /* Movie / Link Display Card */
+        .video-card { background: #161920; border-radius: 8px; border: 1px solid #2a2e39; margin-bottom: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .video-card:hover { border-color: #d4af37; }
+        .video-title { font-size: 14px; font-weight: 500; color: #e2e8f0; flex: 1; padding-right: 10px; }
+        .btn-link { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 8px 14px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 12px; font-family: sans-serif; transition: 0.3s; whitespace: nowrap; }
+        .btn-link:hover { background: #d4af37; color: #000; }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <a href="#" class="logo">CGI<span>Cinema</span></a>
         <div id="owner-section">
@@ -57,54 +53,62 @@
 
     <div class="container">
 
-        <!-- Owner Only Control Panel -->
+        <!-- Owner Control & Typing Settings Panel -->
         <div id="adminPanel" class="owner-panel">
-            <h4>⚙️ Nadeem's Admin & Bank Panel</h4>
-            <p>Apna UPI aur QR code yahan update karein taaki payment direct aapke bank me aaye:</p>
-            <input type="text" id="setUpi" class="input-box" placeholder="Enter UPI ID (e.g. yourname@paytm)">
-            <input type="text" id="setQr" class="input-box" placeholder="Enter QR Image URL">
-            <button onclick="savePaymentDetails()" class="panel-btn">💾 Save Payment Details</button>
-            <a href="https://github.com/cgicinema/movies-site/edit/main/index.html" target="_blank" class="panel-btn" style="background:#38bdf8; color:#0b132b; text-align:center;">✏️ Edit Movie Links</a>
+            <h4>⚙️ Nadeem's Typing Settings & Control Panel</h4>
+            
+            <!-- 1. Price Typing Setting -->
+            <label style="font-size:11px; color:#d4af37; font-family:sans-serif;">Plan Name & Amount Set Karein:</label>
+            <input type="text" id="setPlanName" class="input-box" placeholder="e.g. VIP Pass / Monthly Access">
+            <input type="number" id="setPlanAmount" class="input-box" placeholder="Amount (e.g. 99, 149, 199)">
+            <button onclick="savePlanSettings()" class="panel-btn" style="background:#38bdf8; color:#000; margin-bottom:15px;">💾 Update Subscription Plan</button>
+            
+            <!-- 2. Link Typing Setting -->
+            <label style="font-size:11px; color:#d4af37; font-family:sans-serif;">Nayi Movie Link Add Karein:</label>
+            <input type="text" id="linkTitle" class="input-box" placeholder="Name - Movie Title">
+            <input type="text" id="linkUrl" class="input-box" placeholder="Url - TeraBox/Mega Link">
+            <button onclick="addNewLink()" class="panel-btn">➕ Add Link To Website</button>
         </div>
 
-        <!-- Customer VIP Subscription & Payment Box -->
+        <!-- Customer VIP Subscription View -->
         <div class="sub-card">
-            <h3>⭐ Get VIP Membership</h3>
-            <p>Pay via Google Pay, PhonePe, Paytm & Direct UPI</p>
+            <h3 id="displayPlanName">⭐ Premium VIP Membership</h3>
+            <p>Exclusive Content • Ad-Free Streaming • Direct Access</p>
+            <div class="price-tag" id="displayPlanAmount">₹99</div>
+            
             <div class="pay-box">
-                <div><b>UPI ID:</b> <span id="displayUpi">nadeem@paytm</span></div>
-                <div style="margin-top: 5px;"><a id="upiLink" href="upi://pay?pa=nadeem@paytm&pn=CGICinema&am=99&cu=INR" style="color: #fff; background: #10b981; padding: 5px 10px; border-radius: 4px; font-size: 11px; text-decoration: none; display: inline-block;">Pay ₹99 via UPI App</a></div>
-                <div><img id="displayQr" src="https://via.placeholder.com/120" alt="Scan QR"></div>
-                <div style="font-size: 10px; margin-top: 5px; color: #e2e8f0;">Payment ke baad screenshot WhatsApp par bhejein.</div>
+                <div style="margin-bottom:8px;">UPI ID: <span style="color:#d4af37; font-weight:bold;">6377549421-2@ibl</span></div>
+                <a id="upiPayBtn" href="upi://pay?pa=6377549421-2@ibl&pn=CGICinema&am=99&cu=INR" style="color: #000; background: #d4af37; padding: 10px 20px; border-radius: 4px; font-size: 12px; font-weight:bold; text-decoration: none; display: inline-block;">Pay via Any UPI App</a>
             </div>
         </div>
 
-        <div class="section-title">🎬 Latest Movies & Videos</div>
+        <div class="section-title">🎬 Available Movies & Links</div>
 
-        <!-- Movie Item 1 -->
-        <div class="video-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        <!-- Dynamic Container Where Links Will Appear -->
+        <div id="movieLinksList">
+            
+            <div class="video-card">
+                <div class="video-title">1. Latest Action Blockbuster HD</div>
+                <a href="https://terabox.com" target="_blank" class="btn-link">Watch / Download</a>
             </div>
-            <div class="video-details">
-                <div class="video-title">Blockbuster Movie 1 (Hindi Dubbed)</div>
-                <div class="video-meta">1080p HD • Direct Download</div>
-                <div class="btn-group">
-                    <a href="APNA_TERABOX_LINK" target="_blank" class="btn btn-watch">Watch Online</a>
-                    <a href="APNA_SHORTENER_LINK" target="_blank" class="btn btn-download">Download Link</a>
-                </div>
+
+            <div class="video-card">
+                <div class="video-title">2. Historical Drama Dual Audio</div>
+                <a href="https://mega.nz" target="_blank" class="btn-link">Watch / Download</a>
             </div>
+
         </div>
 
     </div>
 
     <script>
+        // Owner Login Logic
         function ownerLogin() {
             let pass = prompt("Enter Owner Password:");
             if (pass === "Nadeem@123") {
                 localStorage.setItem("isOwnerNadeem", "true");
                 showOwnerStatus();
-                alert("Welcome Boss Nadeem! Admin Panel Unlocked.");
+                alert("Welcome Boss Nadeem! Settings Panel Unlocked.");
             } else {
                 alert("Galat Password!");
             }
@@ -115,35 +119,62 @@
                 document.getElementById("badge").style.display = "inline-block";
                 document.getElementById("login-btn").style.display = "none";
                 document.getElementById("adminPanel").style.display = "block";
-                
-                // Load saved values if available
-                if(localStorage.getItem("savedUpi")) {
-                    document.getElementById("setUpi").value = localStorage.getItem("savedUpi");
-                    document.getElementById("displayUpi").innerText = localStorage.getItem("savedUpi");
-                }
-                if(localStorage.getItem("savedQr")) {
-                    document.getElementById("setQr").value = localStorage.getItem("savedQr");
-                    document.getElementById("displayQr").src = localStorage.getItem("savedQr");
-                }
             }
         }
 
-        function savePaymentDetails() {
-            let upi = document.getElementById("setUpi").value;
-            let qr = document.getElementById("setQr").value;
-            if(upi) {
-                localStorage.setItem("savedUpi", upi);
-                document.getElementById("displayUpi").innerText = upi;
-                document.getElementById("upiLink").href = "upi://pay?pa=" + upi + "&pn=CGICinema&am=99&cu=INR";
+        // Save Amount & Plan Typing Setting
+        function savePlanSettings() {
+            let name = document.getElementById("setPlanName").value;
+            let amount = document.getElementById("setPlanAmount").value;
+
+            if(name) {
+                document.getElementById("displayPlanName").innerText = "⭐ " + name;
+                localStorage.setItem("customPlanName", name);
             }
-            if(qr) {
-                localStorage.setItem("savedQr", qr);
-                document.getElementById("displayQr").src = qr;
+            if(amount) {
+                document.getElementById("displayPlanAmount").innerText = "₹" + amount;
+                document.getElementById("upiPayBtn").href = "upi://pay?pa=6377549421-2@ibl&pn=CGICinema&am=" + amount + "&cu=INR";
+                localStorage.setItem("customPlanAmount", amount);
             }
-            alert("Payment details successfully updated!");
+            alert("Subscription plan detail update ho gayi hai!");
         }
 
-        showOwnerStatus();
+        // Add New Movie Link
+        function addNewLink() {
+            let title = document.getElementById("linkTitle").value;
+            let url = document.getElementById("linkUrl").value;
+
+            if(!title || !url) {
+                alert("Name aur Url dono likhein!");
+                return;
+            }
+
+            let list = document.getElementById("movieLinksList");
+            let newCard = document.createElement("div");
+            newCard.className = "video-card";
+            newCard.innerHTML = `
+                <div class="video-title">${title}</div>
+                <a href="${url}" target="_blank" class="btn-link">Watch / Download</a>
+            `;
+            
+            list.prepend(newCard);
+            document.getElementById("linkTitle").value = "";
+            document.getElementById("linkUrl").value = "";
+            alert("New Link Successfully Added!");
+        }
+
+        // Load Saved Settings on Refresh
+        window.onload = function() {
+            showOwnerStatus();
+            if(localStorage.getItem("customPlanName")) {
+                document.getElementById("displayPlanName").innerText = "⭐ " + localStorage.getItem("customPlanName");
+            }
+            if(localStorage.getItem("customPlanAmount")) {
+                let amt = localStorage.getItem("customPlanAmount");
+                document.getElementById("displayPlanAmount").innerText = "₹" + amt;
+                document.getElementById("upiPayBtn").href = "upi://pay?pa=6377549421-2@ibl&pn=CGICinema&am=" + amt + "&cu=INR";
+            }
+        }
     </script>
 </body>
 </html>
