@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGICinema - Classic VIP Cinema</title>
+    <title>CGICinema - Classic Premium Cinema</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', 'Segoe UI', serif; }
-        body { background-color: #0d0f12; color: #e2e8f0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0b0e14; color: #e2e8f0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* Classic Header */
-        header { width: 100%; background: linear-gradient(180deg, #1a1d24 0%, #0d0f12 100%); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d4af37; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 22px; font-weight: bold; color: #d4af37; text-decoration: none; letter-spacing: 1px; }
-        .logo span { color: #ffffff; }
-        .btn-admin { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 5px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; transition: 0.3s; }
-        .btn-admin:hover { background: #d4af37; color: #000; }
-        .owner-badge { background: #d4af37; color: #000; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; display: none; }
+        /* Header */
+        header { width: 100%; background: #131722; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff0055; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 22px; font-weight: bold; color: #ffffff; text-decoration: none; }
+        .logo span { color: #ff0055; }
+        .btn-main-login { background: #ff0055; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .owner-badge { background: #10b981; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; display: none; }
 
-        .container { width: 100%; max-width: 520px; padding: 20px 15px; }
-        .section-title { font-size: 16px; font-weight: 600; margin: 20px 0 12px 0; color: #d4af37; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 5px; }
+        .container { width: 100%; max-width: 500px; padding: 20px 15px; }
+        .section-title { font-size: 16px; font-weight: 600; margin: 20px 0 12px 0; color: #38bdf8; border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 5px; }
 
-        /* Owner Typing Settings Panel */
-        .owner-panel { background: #161920; border: 1px solid #d4af37; border-radius: 8px; padding: 15px; margin-bottom: 20px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .owner-panel h4 { color: #d4af37; font-size: 14px; margin-bottom: 10px; font-family: sans-serif; }
-        .input-box { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #2a2e39; background: #0d0f12; color: #fff; font-size: 13px; font-family: sans-serif; }
-        .panel-btn { display: block; background: #d4af37; color: #000; padding: 10px; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; font-family: sans-serif; margin-top: 5px; }
+        /* Modal Overlay (Selection Box) */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-card { background: #161b26; border: 1px solid #ff0055; padding: 25px 20px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 5px 20px rgba(255, 0, 85, 0.3); }
+        .modal-card h3 { color: #fff; margin-bottom: 15px; font-size: 18px; }
+        .modal-btn { display: block; width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer; }
+        .btn-cust-choice { background: #38bdf8; color: #0b0e14; }
+        .btn-owner-choice { background: #10b981; color: #fff; }
+        .close-modal { background: transparent; color: #94a3b8; border: none; font-size: 12px; cursor: pointer; margin-top: 10px; text-decoration: underline; }
 
-        /* Classic VIP Subscription Card */
-        .sub-card { background: linear-gradient(145deg, #1c2029, #13151b); border: 1px solid #d4af37; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
-        .sub-card h3 { font-size: 18px; color: #d4af37; margin-bottom: 6px; }
-        .sub-card p { font-size: 12px; color: #a0aec0; margin-bottom: 15px; font-family: sans-serif; }
-        .price-tag { font-size: 24px; font-weight: bold; color: #fff; margin-bottom: 15px; }
-        .pay-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 6px; border: 1px dashed rgba(212,175,55,0.4); font-family: sans-serif; font-size: 13px; }
+        /* Owner Panel */
+        .owner-panel { background: #161b26; border: 1px solid #10b981; border-radius: 8px; padding: 15px; margin-bottom: 20px; display: none; }
+        .owner-panel h4 { color: #10b981; font-size: 14px; margin-bottom: 10px; }
+        .input-group { background: #0b0e14; padding: 10px; border-radius: 6px; border: 1px solid #2a3245; margin-bottom: 10px; }
+        .input-box { width: 100%; padding: 8px; margin-top: 4px; margin-bottom: 8px; border-radius: 4px; border: 1px solid #2a3245; background: #161b26; color: #fff; font-size: 12px; }
+        .panel-btn { display: block; background: #10b981; color: #fff; padding: 10px; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; border: none; cursor: pointer; width: 100%; }
 
-        /* Movie / Link Display Card */
-        .video-card { background: #161920; border-radius: 8px; border: 1px solid #2a2e39; margin-bottom: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .video-card:hover { border-color: #d4af37; }
-        .video-title { font-size: 14px; font-weight: 500; color: #e2e8f0; flex: 1; padding-right: 10px; }
-        .btn-link { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 8px 14px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 12px; font-family: sans-serif; transition: 0.3s; whitespace: nowrap; }
-        .btn-link:hover { background: #d4af37; color: #000; }
+        /* Subscription Section */
+        .sub-card { background: #161b26; border: 1px solid #ff0055; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
+        .sub-card h3 { font-size: 18px; color: #ffffff; margin-bottom: 6px; }
+        .sub-card p { font-size: 12px; color: #94a3b8; margin-bottom: 15px; }
+        
+        .qr-box { background: #000000; padding: 15px; border-radius: 10px; display: inline-block; border: 1px solid #334155; margin-bottom: 15px; width: 220px; }
+        .qr-box img { width: 100%; height: auto; border-radius: 6px; }
+        .qr-name { font-size: 13px; font-weight: bold; color: #ffffff; margin-top: 8px; }
+
+        .unlock-box { background: #0b0e14; padding: 12px; border-radius: 8px; margin-top: 10px; }
+        .unlock-btn { background: #ff0055; color: white; border: none; padding: 8px 15px; border-radius: 4px; font-weight: bold; font-size: 12px; cursor: pointer; margin-top: 5px; width: 100%; }
+
+        /* Movies List */
+        .video-card { background: #161b26; border-radius: 8px; border: 1px solid #2a3245; margin-bottom: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .video-title { font-size: 13px; font-weight: 500; color: #e2e8f0; flex: 1; padding-right: 10px; }
+        .btn-link { background: #38bdf8; color: #0b0e14; padding: 6px 12px; border-radius: 4px; font-weight: bold; text-decoration: none; font-size: 12px; }
+        
+        .locked-view { text-align: center; padding: 30px 10px; color: #94a3b8; font-size: 13px; background: #161b26; border-radius: 8px; border: 1px dashed #334155; }
     </style>
 </head>
 <body>
@@ -47,70 +61,94 @@
         <a href="#" class="logo">CGI<span>Cinema</span></a>
         <div id="owner-section">
             <span id="badge" class="owner-badge">👑 Nadeem (Owner)</span>
-            <button id="login-btn" class="btn-admin" onclick="ownerLogin()">Owner Login</button>
+            <button id="login-btn" class="btn-main-login" onclick="openChoiceModal()">🔑 LOGIN</button>
         </div>
     </header>
 
+    <!-- Choice Selection Popup Modal -->
+    <div id="choiceModal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>Select Account Type</h3>
+            <button class="modal-btn btn-cust-choice" onclick="selectRole('customer')">👤 Customer Access</button>
+            <button class="modal-btn btn-owner-choice" onclick="selectRole('owner')">👑 Owner Login</button>
+            <button class="close-modal" onclick="closeChoiceModal()">Close Window</button>
+        </div>
+    </div>
+
     <div class="container">
 
-        <!-- Owner Control & Typing Settings Panel -->
+        <!-- Owner Control Panel -->
         <div id="adminPanel" class="owner-panel">
-            <h4>⚙️ Nadeem's Typing Settings & Control Panel</h4>
+            <h4>⚙️ Nadeem Owner Control Panel</h4>
+            <p style="font-size:11px; color:#94a3b8; margin-bottom:12px;">Link Add Karein (Ek link save hone par agla option ban jayega):</p>
             
-            <!-- 1. Price Typing Setting -->
-            <label style="font-size:11px; color:#d4af37; font-family:sans-serif;">Plan Name & Amount Set Karein:</label>
-            <input type="text" id="setPlanName" class="input-box" placeholder="e.g. VIP Pass / Monthly Access">
-            <input type="number" id="setPlanAmount" class="input-box" placeholder="Amount (e.g. 99, 149, 199)">
-            <button onclick="savePlanSettings()" class="panel-btn" style="background:#38bdf8; color:#000; margin-bottom:15px;">💾 Update Subscription Plan</button>
-            
-            <!-- 2. Link Typing Setting -->
-            <label style="font-size:11px; color:#d4af37; font-family:sans-serif;">Nayi Movie Link Add Karein:</label>
-            <input type="text" id="linkTitle" class="input-box" placeholder="Name - Movie Title">
-            <input type="text" id="linkUrl" class="input-box" placeholder="Url - TeraBox/Mega Link">
-            <button onclick="addNewLink()" class="panel-btn">➕ Add Link To Website</button>
+            <div id="dynamicInputs">
+                <div class="input-group">
+                    <label style="font-size:11px; color:#38bdf8;">Link 1 Name:</label>
+                    <input type="text" class="input-box link-title" placeholder="Movie Name type karein">
+                    <label style="font-size:11px; color:#38bdf8;">Link 1 URL:</label>
+                    <input type="text" class="input-box link-url" placeholder="https://terabox.com/...">
+                </div>
+            </div>
+
+            <button onclick="saveAndGenerateNext()" class="panel-btn">➕ Save & Add Next Link Option</button>
         </div>
 
         <!-- Customer VIP Subscription View -->
-        <div class="sub-card">
-            <h3 id="displayPlanName">⭐ Premium VIP Membership</h3>
-            <p>Exclusive Content • Ad-Free Streaming • Direct Access</p>
-            <div class="price-tag" id="displayPlanAmount">₹99</div>
+        <div class="sub-card" id="subscriptionSection">
+            <h3>⭐ PhonePe VIP Subscription</h3>
+            <p>Scan QR code using PhonePe App to get access</p>
             
-            <div class="pay-box">
-                <div style="margin-bottom:8px;">UPI ID: <span style="color:#d4af37; font-weight:bold;">6377549421-2@ibl</span></div>
-                <a id="upiPayBtn" href="upi://pay?pa=6377549421-2@ibl&pn=CGICinema&am=99&cu=INR" style="color: #000; background: #d4af37; padding: 10px 20px; border-radius: 4px; font-size: 12px; font-weight:bold; text-decoration: none; display: inline-block;">Pay via Any UPI App</a>
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=6377549421-2@ibl%26pn=Nadeem%20Bhati%26cu=INR" alt="PhonePe QR">
+                <div class="qr-name">Nadeem Bhati</div>
+            </div>
+
+            <div class="unlock-box">
+                <p style="font-size: 11px; color: #cbd5e1;">Payment ke baad Passcode submit karein:</p>
+                <input type="password" id="custPass" class="input-box" placeholder="Enter Access Password" style="margin-top:8px;">
+                <button onclick="unlockContent()" class="unlock-btn">🔓 Unlock Movie Links</button>
             </div>
         </div>
 
-        <div class="section-title">🎬 Available Movies & Links</div>
+        <div class="section-title">🎬 Premium Movies & Videos</div>
 
-        <!-- Dynamic Container Where Links Will Appear -->
+        <!-- Movies Container -->
         <div id="movieLinksList">
-            
-            <div class="video-card">
-                <div class="video-title">1. Latest Action Blockbuster HD</div>
-                <a href="https://terabox.com" target="_blank" class="btn-link">Watch / Download</a>
+            <div id="lockedMsg" class="locked-view">
+                🔒 Subscription lene ke baad QR code scan karke unlock karein.
             </div>
-
-            <div class="video-card">
-                <div class="video-title">2. Historical Drama Dual Audio</div>
-                <a href="https://mega.nz" target="_blank" class="btn-link">Watch / Download</a>
+            <div id="linksContent" style="display: none;">
+                <!-- Links dynamically populating -->
             </div>
-
         </div>
 
     </div>
 
     <script>
-        // Owner Login Logic
-        function ownerLogin() {
-            let pass = prompt("Enter Owner Password:");
-            if (pass === "Nadeem@123") {
-                localStorage.setItem("isOwnerNadeem", "true");
-                showOwnerStatus();
-                alert("Welcome Boss Nadeem! Settings Panel Unlocked.");
-            } else {
-                alert("Galat Password!");
+        let linkCounter = 1;
+
+        function openChoiceModal() {
+            document.getElementById("choiceModal").style.display = "flex";
+        }
+
+        function closeChoiceModal() {
+            document.getElementById("choiceModal").style.display = "none";
+        }
+
+        function selectRole(role) {
+            closeChoiceModal();
+            if (role === 'owner') {
+                let pass = prompt("Enter Owner Password:");
+                if (pass === "Nadeem@123") {
+                    localStorage.setItem("isOwnerNadeem", "true");
+                    showOwnerStatus();
+                    alert("Welcome Boss Nadeem! Links Control Panel Unlocked.");
+                } else {
+                    alert("Galat Password!");
+                }
+            } else if (role === 'customer') {
+                document.getElementById("subscriptionSection").scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -119,61 +157,60 @@
                 document.getElementById("badge").style.display = "inline-block";
                 document.getElementById("login-btn").style.display = "none";
                 document.getElementById("adminPanel").style.display = "block";
+                document.getElementById("linksContent").style.display = "block";
+                document.getElementById("lockedMsg").style.display = "none";
             }
         }
 
-        // Save Amount & Plan Typing Setting
-        function savePlanSettings() {
-            let name = document.getElementById("setPlanName").value;
-            let amount = document.getElementById("setPlanAmount").value;
+        function saveAndGenerateNext() {
+            let titles = document.getElementsByClassName("link-title");
+            let urls = document.getElementsByClassName("link-url");
+            
+            let lastTitle = titles[titles.length - 1].value;
+            let lastUrl = urls[urls.length - 1].value;
 
-            if(name) {
-                document.getElementById("displayPlanName").innerText = "⭐ " + name;
-                localStorage.setItem("customPlanName", name);
-            }
-            if(amount) {
-                document.getElementById("displayPlanAmount").innerText = "₹" + amount;
-                document.getElementById("upiPayBtn").href = "upi://pay?pa=6377549421-2@ibl&pn=CGICinema&am=" + amount + "&cu=INR";
-                localStorage.setItem("customPlanAmount", amount);
-            }
-            alert("Subscription plan detail update ho gayi hai!");
-        }
-
-        // Add New Movie Link
-        function addNewLink() {
-            let title = document.getElementById("linkTitle").value;
-            let url = document.getElementById("linkUrl").value;
-
-            if(!title || !url) {
-                alert("Name aur Url dono likhein!");
+            if(!lastTitle || !lastUrl) {
+                alert("Current Link ka Name aur URL dono bharein!");
                 return;
             }
 
-            let list = document.getElementById("movieLinksList");
-            let newCard = document.createElement("div");
-            newCard.className = "video-card";
-            newCard.innerHTML = `
-                <div class="video-title">${title}</div>
-                <a href="${url}" target="_blank" class="btn-link">Watch / Download</a>
+            let list = document.getElementById("linksContent");
+            let card = document.createElement("div");
+            card.className = "video-card";
+            card.innerHTML = `
+                <div class="video-title">${lastTitle}</div>
+                <a href="${lastUrl}" target="_blank" class="btn-link">Watch / Download</a>
             `;
-            
-            list.prepend(newCard);
-            document.getElementById("linkTitle").value = "";
-            document.getElementById("linkUrl").value = "";
-            alert("New Link Successfully Added!");
+            list.prepend(card);
+
+            linkCounter++;
+            let container = document.getElementById("dynamicInputs");
+            let nextBox = document.createElement("div");
+            nextBox.className = "input-group";
+            nextBox.innerHTML = `
+                <label style="font-size:11px; color:#38bdf8;">Link ${linkCounter} Name:</label>
+                <input type="text" class="input-box link-title" placeholder="Movie Name type karein">
+                <label style="font-size:11px; color:#38bdf8;">Link ${linkCounter} URL:</label>
+                <input type="text" class="input-box link-url" placeholder="https://terabox.com/...">
+            `;
+            container.appendChild(nextBox);
+
+            alert(`Link ${linkCounter - 1} Saved! Link ${linkCounter} ka Option Tayar Hai.`);
         }
 
-        // Load Saved Settings on Refresh
+        function unlockContent() {
+            let pass = document.getElementById("custPass").value;
+            if(pass !== "") {
+                document.getElementById("linksContent").style.display = "block";
+                document.getElementById("lockedMsg").style.display = "none";
+                alert("Subscription Verified! Movie Links Unlocked.");
+            } else {
+                alert("Subscription Passcode Enter Karein.");
+            }
+        }
+
         window.onload = function() {
             showOwnerStatus();
-            if(localStorage.getItem("customPlanName")) {
-                document.getElementById("displayPlanName").innerText = "⭐ " + localStorage.getItem("customPlanName");
-            }
-            if(localStorage.getItem("customPlanAmount")) {
-                let amt = localStorage.getItem("customPlanAmount");
-                document.getElementById("displayPlanAmount").innerText = "₹" + amt;
-                document.getElementById("upiPayBtn").href = "upi://pay?pa=6377549421-2@ibl&pn=CGICinema&am=" + amt + "&cu=INR";
-            }
         }
     </script>
 </body>
