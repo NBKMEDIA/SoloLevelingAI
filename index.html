@@ -3,48 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGICinema - HD Movies Download</title>
+    <title>CGICinema - Watch, Create & Earn</title>
+    
+    <!-- Firebase SDKs for Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b1325; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        header { width: 100%; background-color: #162238; padding: 15px; text-align: center; border-bottom: 2px solid #38bdf8; }
-        .logo { font-size: 24px; font-weight: bold; color: #ffffff; text-decoration: none; }
-        .logo span { color: #f43f5e; }
-        .container { width: 100%; max-width: 500px; padding: 20px 15px; }
-        .section-heading { font-size: 18px; margin: 15px 0; padding-left: 10px; border-left: 4px solid #f43f5e; }
-        .movie-card { background-color: #162238; border-radius: 10px; padding: 15px; margin-bottom: 15px; position: relative; }
-        .badge { position: absolute; top: 15px; right: 15px; background-color: #f43f5e; color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; }
-        .movie-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
-        .movie-meta { font-size: 12px; color: #94a3b8; margin-bottom: 15px; }
-        .btn-download { display: block; width: 100%; padding: 12px; background-color: #38bdf8; color: #0b1325; text-align: center; font-weight: bold; text-decoration: none; border-radius: 6px; }
+        body { background-color: #0b132b; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        
+        /* Header & Navbar */
+        header { width: 100%; background-color: #1c2541; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff0055; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 20px; font-weight: bold; color: #ffffff; text-decoration: none; }
+        .logo span { color: #ff0055; }
+        .btn-auth { background: #ff0055; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        
+        .container { width: 100%; max-width: 500px; padding: 15px; }
+        .section-title { font-size: 15px; font-weight: bold; margin: 15px 0 10px 0; color: #4cc9f0; display: flex; align-items: center; gap: 8px; }
+
+        /* Shorts Reel Section (TikTok/Insta Style) */
+        .shorts-wrapper { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+        .shorts-wrapper::-webkit-scrollbar { display: none; }
+        .short-card { min-width: 110px; height: 170px; background-color: #1c2541; border-radius: 10px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 8px; text-decoration: none; color: white; background-size: cover; background-position: center; border: 1px solid rgba(255,255,255,0.1); }
+        .short-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+        .short-title { position: relative; z-index: 1; font-size: 11px; font-weight: 600; }
+
+        /* Channel Creation Box */
+        .channel-box { background: #1c2541; padding: 12px; border-radius: 10px; margin: 10px 0; border: 1px solid #38bdf8; }
+        .input-field { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; margin: 6px 0; }
+
+        /* Ad Banner */
+        .ad-banner { width: 100%; padding: 10px; background: #1c2541; border: 1px dashed #4cc9f0; border-radius: 8px; text-align: center; font-size: 12px; color: #4cc9f0; margin: 10px 0; }
+
+        /* Video Card */
+        .video-card { background-color: #1c2541; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background-color: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-details { padding: 12px; }
+        .video-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
+        .video-meta { font-size: 11px; color: #a0aec0; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        
+        /* Buttons & Actions */
+        .btn-group { display: flex; gap: 6px; margin-bottom: 8px; }
+        .btn { flex: 1; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 12px; display: block; }
+        .btn-watch { background-color: #ff0055; color: white; }
+        .btn-download { background-color: #4cc9f0; color: #0b132b; }
+        .btn-gift { background: #f59e0b; color: #000; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <a href="#" class="logo">CGI<span>Cinema</span></a>
+        <div id="user-profile">
+            <button class="btn-auth" onclick="googleLogin()">Sign In</button>
+        </div>
     </header>
 
     <div class="container">
-        <div class="section-heading">Latest Uploaded Movies</div>
 
-        <!-- MOVIE 1 -->
-        <div class="movie-card">
-            <span class="badge">1080p HD</span>
-            <div class="movie-title">Action Blockbuster Movie</div>
-            <div class="movie-meta">Hindi Dual Audio | 1.4 GB</div>
-            <a href="#" target="_blank" class="btn-download">Download Now</a>
+        <!-- User Channel Creation UI -->
+        <div class="channel-box">
+            <div style="font-size:13px; font-weight:bold;">🎥 Create Your Channel & Earn</div>
+            <input type="text" id="channelName" class="input-field" placeholder="Channel Name likhein...">
+            <button onclick="createChannel()" class="btn btn-watch" style="border:none; width:100%; cursor:pointer;">Create Channel</button>
+            <div id="channelStatus" style="font-size:11px; color:#10b981; margin-top:5px;"></div>
+        </div>
+        
+        <!-- Trending Shorts Section -->
+        <div class="section-title">🔥 Trending Shorts & Reels</div>
+        <div class="shorts-wrapper">
+            <a href="APNA_EARNING_LINK" target="_blank" class="short-card" style="background-image: url('https://picsum.photos/200/300?random=1');">
+                <div class="short-title">Trending Teaser 🎬</div>
+            </a>
+            <a href="APNA_EARNING_LINK" target="_blank" class="short-card" style="background-image: url('https://picsum.photos/200/300?random=2');">
+                <div class="short-title">Viral Action Clip 🔥</div>
+            </a>
+            <a href="APNA_EARNING_LINK" target="_blank" class="short-card" style="background-image: url('https://picsum.photos/200/300?random=3');">
+                <div class="short-title">Super Twist Scene 🍿</div>
+            </a>
         </div>
 
-        <!-- MOVIE 2 -->
-        <div class="movie-card">
-            <span class="badge">720p HD</span>
-            <div class="movie-title">Latest Historical Drama</div>
-            <div class="movie-meta">Hindi Audio | 900 MB</div>
-            <a href="#" target="_blank" class="btn-download">Download Now</a>
+        <!-- Adsterra / Earning Ad Space -->
+        <div class="ad-banner">
+            💰 Earning Banner / Adsterra Direct Link Here
+        </div>
+
+        <!-- Main Video Card 1 -->
+        <div class="section-title">🍿 Featured Videos</div>
+        <div class="video-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            </div>
+            <div class="video-details">
+                <div class="video-title">Action Blockbuster Movie Full HD</div>
+                <div class="video-meta">
+                    <span>By: CGICinema Official</span>
+                    <span>👁️ 1,450 Views • Est. ₹72</span>
+                </div>
+                <div class="btn-group">
+                    <a href="APNA_TERABOX_LINK" target="_blank" class="btn btn-watch">Watch Online</a>
+                    <a href="APNA_EARNING_LINK" target="_blank" class="btn btn-download">Download Movie</a>
+                </div>
+                <button class="btn-gift" onclick="sendGift('CGICinema')">🎁 Send Super Gift (₹10 - ₹500)</button>
+            </div>
+        </div>
+
+        <!-- Live Video Call / Support Room -->
+        <div class="section-title">📞 Community Live Call Room</div>
+        <div style="border-radius:10px; overflow:hidden; border:1px solid #334155;">
+            <iframe src="https://meet.jit.si/CGICinemaLiveSupportRoom" allow="camera; microphone" style="width:100%; height:250px; border:none;"></iframe>
         </div>
 
     </div>
 
+    <!-- Script Logic -->
+    <script>
+        // Firebase Setup (Apna Config Replace Karein)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // 1. Google Sign-In
+        function googleLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                document.getElementById("user-profile").innerHTML = `
+                    <img src="${user.photoURL}" style="width:26px; height:26px; border-radius:50%; vertical-align:middle;">
+                `;
+            }).catch((err) => alert("Sign-in setup complete karne ke baad ye active hoga!"));
+        }
+
+        // 2. Channel Creation Logic
+        function createChannel() {
+            const name = document.getElementById('channelName').value;
+            if(name) {
+                document.getElementById('channelStatus').innerText = "✓ Channel '" + name + "' Ready!";
+            } else {
+                alert("Channel ka naam likhein!");
+            }
+        }
+
+        // 3. Super Gift Payment Trigger
+        function sendGift(creator) {
+            alert(creator + " ko Gift/UPI bhejney ke liye Payment Window Open Ho Rahi Hai!");
+        }
+    </script>
 </body>
 </html>
