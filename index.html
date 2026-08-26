@@ -3,160 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGICinema - Watch, Create & Earn</title>
-    
-    <!-- Firebase SDKs for Auth -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-
+    <title>CGICinema - HD Movies & VIP Access</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b132b; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* Header & Navbar */
         header { width: 100%; background-color: #1c2541; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff0055; position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 20px; font-weight: bold; color: #ffffff; text-decoration: none; }
         .logo span { color: #ff0055; }
-        .btn-auth { background: #ff0055; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
-        
+        .btn-admin { background: #38bdf8; color: #0b132b; border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .owner-badge { background: #10b981; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; display: none; }
+
         .container { width: 100%; max-width: 500px; padding: 15px; }
-        .section-title { font-size: 15px; font-weight: bold; margin: 15px 0 10px 0; color: #4cc9f0; display: flex; align-items: center; gap: 8px; }
+        .section-title { font-size: 15px; font-weight: bold; margin: 15px 0 10px 0; color: #4cc9f0; }
 
-        /* Shorts Reel Section (TikTok/Insta Style) */
-        .shorts-wrapper { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
-        .shorts-wrapper::-webkit-scrollbar { display: none; }
-        .short-card { min-width: 110px; height: 170px; background-color: #1c2541; border-radius: 10px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 8px; text-decoration: none; color: white; background-size: cover; background-position: center; border: 1px solid rgba(255,255,255,0.1); }
-        .short-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
-        .short-title { position: relative; z-index: 1; font-size: 11px; font-weight: 600; }
+        /* Owner Secret Control Panel */
+        .owner-panel { background: #162447; border: 1px solid #10b981; border-radius: 10px; padding: 15px; margin-bottom: 15px; display: none; }
+        .owner-panel h4 { color: #10b981; font-size: 14px; margin-bottom: 8px; }
+        .owner-panel p { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; }
+        .input-box { width: 100%; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 12px; }
+        .panel-btn { display: block; background: #10b981; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; text-align: center; margin-top: 6px; border: none; cursor: pointer; width: 100%; }
 
-        /* Channel Creation Box */
-        .channel-box { background: #1c2541; padding: 12px; border-radius: 10px; margin: 10px 0; border: 1px solid #38bdf8; }
-        .input-field { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; margin: 6px 0; }
-
-        /* Ad Banner */
-        .ad-banner { width: 100%; padding: 10px; background: #1c2541; border: 1px dashed #4cc9f0; border-radius: 8px; text-align: center; font-size: 12px; color: #4cc9f0; margin: 10px 0; }
+        /* Customer Payment Section */
+        .sub-card { background: linear-gradient(135deg, #ff0055, #7928ca); padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px; }
+        .sub-card h3 { font-size: 16px; margin-bottom: 5px; }
+        .sub-card p { font-size: 12px; margin-bottom: 10px; opacity: 0.9; }
+        .pay-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 13px; }
+        .pay-box img { width: 120px; height: 120px; border-radius: 6px; margin-top: 8px; background: white; padding: 4px; }
 
         /* Video Card */
-        .video-card { background-color: #1c2541; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .video-card { background-color: #1c2541; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.08); }
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background-color: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .video-details { padding: 12px; }
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
-        .video-meta { font-size: 11px; color: #a0aec0; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        
-        /* Buttons & Actions */
-        .btn-group { display: flex; gap: 6px; margin-bottom: 8px; }
+        .video-meta { font-size: 11px; color: #94a3b8; margin-bottom: 10px; }
+
+        .btn-group { display: flex; gap: 6px; }
         .btn { flex: 1; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 12px; display: block; }
         .btn-watch { background-color: #ff0055; color: white; }
         .btn-download { background-color: #4cc9f0; color: #0b132b; }
-        .btn-gift { background: #f59e0b; color: #000; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <a href="#" class="logo">CGI<span>Cinema</span></a>
-        <div id="user-profile">
-            <button class="btn-auth" onclick="googleLogin()">Sign In</button>
+        <div id="owner-section">
+            <span id="badge" class="owner-badge">👑 Nadeem (Owner)</span>
+            <button id="login-btn" class="btn-admin" onclick="ownerLogin()">Owner Login</button>
         </div>
     </header>
 
     <div class="container">
 
-        <!-- User Channel Creation UI -->
-        <div class="channel-box">
-            <div style="font-size:13px; font-weight:bold;">🎥 Create Your Channel & Earn</div>
-            <input type="text" id="channelName" class="input-field" placeholder="Channel Name likhein...">
-            <button onclick="createChannel()" class="btn btn-watch" style="border:none; width:100%; cursor:pointer;">Create Channel</button>
-            <div id="channelStatus" style="font-size:11px; color:#10b981; margin-top:5px;"></div>
-        </div>
-        
-        <!-- Trending Shorts Section -->
-        <div class="section-title">🔥 Trending Shorts & Reels</div>
-        <div class="shorts-wrapper">
-            <a href="APNA_EARNING_LINK" target="_blank" class="short-card" style="background-image: url('https://picsum.photos/200/300?random=1');">
-                <div class="short-title">Trending Teaser 🎬</div>
-            </a>
-            <a href="APNA_EARNING_LINK" target="_blank" class="short-card" style="background-image: url('https://picsum.photos/200/300?random=2');">
-                <div class="short-title">Viral Action Clip 🔥</div>
-            </a>
-            <a href="APNA_EARNING_LINK" target="_blank" class="short-card" style="background-image: url('https://picsum.photos/200/300?random=3');">
-                <div class="short-title">Super Twist Scene 🍿</div>
-            </a>
+        <!-- Owner Only Control Panel -->
+        <div id="adminPanel" class="owner-panel">
+            <h4>⚙️ Nadeem's Admin & Bank Panel</h4>
+            <p>Apna UPI aur QR code yahan update karein taaki payment direct aapke bank me aaye:</p>
+            <input type="text" id="setUpi" class="input-box" placeholder="Enter UPI ID (e.g. yourname@paytm)">
+            <input type="text" id="setQr" class="input-box" placeholder="Enter QR Image URL">
+            <button onclick="savePaymentDetails()" class="panel-btn">💾 Save Payment Details</button>
+            <a href="https://github.com/cgicinema/movies-site/edit/main/index.html" target="_blank" class="panel-btn" style="background:#38bdf8; color:#0b132b; text-align:center;">✏️ Edit Movie Links</a>
         </div>
 
-        <!-- Adsterra / Earning Ad Space -->
-        <div class="ad-banner">
-            💰 Earning Banner / Adsterra Direct Link Here
+        <!-- Customer VIP Subscription & Payment Box -->
+        <div class="sub-card">
+            <h3>⭐ Get VIP Membership</h3>
+            <p>Pay via Google Pay, PhonePe, Paytm & Direct UPI</p>
+            <div class="pay-box">
+                <div><b>UPI ID:</b> <span id="displayUpi">nadeem@paytm</span></div>
+                <div style="margin-top: 5px;"><a id="upiLink" href="upi://pay?pa=nadeem@paytm&pn=CGICinema&am=99&cu=INR" style="color: #fff; background: #10b981; padding: 5px 10px; border-radius: 4px; font-size: 11px; text-decoration: none; display: inline-block;">Pay ₹99 via UPI App</a></div>
+                <div><img id="displayQr" src="https://via.placeholder.com/120" alt="Scan QR"></div>
+                <div style="font-size: 10px; margin-top: 5px; color: #e2e8f0;">Payment ke baad screenshot WhatsApp par bhejein.</div>
+            </div>
         </div>
 
-        <!-- Main Video Card 1 -->
-        <div class="section-title">🍿 Featured Videos</div>
+        <div class="section-title">🎬 Latest Movies & Videos</div>
+
+        <!-- Movie Item 1 -->
         <div class="video-card">
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
             </div>
             <div class="video-details">
-                <div class="video-title">Action Blockbuster Movie Full HD</div>
-                <div class="video-meta">
-                    <span>By: CGICinema Official</span>
-                    <span>👁️ 1,450 Views • Est. ₹72</span>
-                </div>
+                <div class="video-title">Blockbuster Movie 1 (Hindi Dubbed)</div>
+                <div class="video-meta">1080p HD • Direct Download</div>
                 <div class="btn-group">
                     <a href="APNA_TERABOX_LINK" target="_blank" class="btn btn-watch">Watch Online</a>
-                    <a href="APNA_EARNING_LINK" target="_blank" class="btn btn-download">Download Movie</a>
+                    <a href="APNA_SHORTENER_LINK" target="_blank" class="btn btn-download">Download Link</a>
                 </div>
-                <button class="btn-gift" onclick="sendGift('CGICinema')">🎁 Send Super Gift (₹10 - ₹500)</button>
             </div>
-        </div>
-
-        <!-- Live Video Call / Support Room -->
-        <div class="section-title">📞 Community Live Call Room</div>
-        <div style="border-radius:10px; overflow:hidden; border:1px solid #334155;">
-            <iframe src="https://meet.jit.si/CGICinemaLiveSupportRoom" allow="camera; microphone" style="width:100%; height:250px; border:none;"></iframe>
         </div>
 
     </div>
 
-    <!-- Script Logic -->
     <script>
-        // Firebase Setup (Apna Config Replace Karein)
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        // 1. Google Sign-In
-        function googleLogin() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).then((result) => {
-                const user = result.user;
-                document.getElementById("user-profile").innerHTML = `
-                    <img src="${user.photoURL}" style="width:26px; height:26px; border-radius:50%; vertical-align:middle;">
-                `;
-            }).catch((err) => alert("Sign-in setup complete karne ke baad ye active hoga!"));
-        }
-
-        // 2. Channel Creation Logic
-        function createChannel() {
-            const name = document.getElementById('channelName').value;
-            if(name) {
-                document.getElementById('channelStatus').innerText = "✓ Channel '" + name + "' Ready!";
+        function ownerLogin() {
+            let pass = prompt("Enter Owner Password:");
+            if (pass === "Nadeem@123") {
+                localStorage.setItem("isOwnerNadeem", "true");
+                showOwnerStatus();
+                alert("Welcome Boss Nadeem! Admin Panel Unlocked.");
             } else {
-                alert("Channel ka naam likhein!");
+                alert("Galat Password!");
             }
         }
 
-        // 3. Super Gift Payment Trigger
-        function sendGift(creator) {
-            alert(creator + " ko Gift/UPI bhejney ke liye Payment Window Open Ho Rahi Hai!");
+        function showOwnerStatus() {
+            if (localStorage.getItem("isOwnerNadeem") === "true") {
+                document.getElementById("badge").style.display = "inline-block";
+                document.getElementById("login-btn").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                
+                // Load saved values if available
+                if(localStorage.getItem("savedUpi")) {
+                    document.getElementById("setUpi").value = localStorage.getItem("savedUpi");
+                    document.getElementById("displayUpi").innerText = localStorage.getItem("savedUpi");
+                }
+                if(localStorage.getItem("savedQr")) {
+                    document.getElementById("setQr").value = localStorage.getItem("savedQr");
+                    document.getElementById("displayQr").src = localStorage.getItem("savedQr");
+                }
+            }
         }
+
+        function savePaymentDetails() {
+            let upi = document.getElementById("setUpi").value;
+            let qr = document.getElementById("setQr").value;
+            if(upi) {
+                localStorage.setItem("savedUpi", upi);
+                document.getElementById("displayUpi").innerText = upi;
+                document.getElementById("upiLink").href = "upi://pay?pa=" + upi + "&pn=CGICinema&am=99&cu=INR";
+            }
+            if(qr) {
+                localStorage.setItem("savedQr", qr);
+                document.getElementById("displayQr").src = qr;
+            }
+            alert("Payment details successfully updated!");
+        }
+
+        showOwnerStatus();
     </script>
 </body>
 </html>
