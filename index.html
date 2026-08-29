@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel & Master Management System</title>
+  <title>CGICinema - VIP Media & Streaming Portal</title>
   <style>
     :root {
       --bg-color: #0d0d11;
@@ -17,7 +17,6 @@
       --danger: #ef4444;
     }
 
-    /* Additional Light Theme */
     [data-theme="light"] {
       --bg-color: #f3f4f6;
       --card-bg: #ffffff;
@@ -28,7 +27,6 @@
       --primary-hover: #4f46e5;
     }
 
-    /* Additional Ocean Theme */
     [data-theme="ocean"] {
       --bg-color: #0f172a;
       --card-bg: #1e293b;
@@ -39,321 +37,455 @@
       --primary-hover: #0891b2;
     }
 
-    * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: background 0.2s, color 0.2s; }
-    body { background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; transition: background 0.2s, color 0.2s; }
+    body { background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 15px; }
 
-    /* Login Screen */
-    #loginScreen {
-      max-width: 400px;
-      margin: 80px auto;
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      text-align: center;
+    /* Header Nav */
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+    .logo-text { font-size: 20px; font-weight: bold; color: var(--primary); }
+    .btn-vip-header {
+      background: linear-gradient(45deg, #8b5cf6, #ec4899);
+      color: white; border: none; padding: 10px 20px;
+      font-weight: bold; border-radius: 20px; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
     }
+
+    /* AdSense Banner Slot */
+    .ad-banner-slot {
+      background: var(--card-bg); border: 1px dashed var(--border-color);
+      padding: 15px; text-align: center; margin-bottom: 20px; border-radius: 8px;
+      font-size: 12px; color: var(--text-muted);
+    }
+
+    /* Customer Notice */
+    #publicNotice {
+      background: #1e1b4b; border: 1px solid #4338ca; color: #c7d2fe;
+      padding: 12px; border-radius: 8px; margin-bottom: 20px; display: none; text-align: center; font-size: 14px;
+    }
+
+    /* Public Content Grid */
+    .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
+    .badge { font-size: 10px; font-weight: bold; padding: 3px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
+    .badge-free { background: var(--success); color: black; }
+    .badge-vip { background: #eab308; color: black; }
+    .btn-action { width: 100%; padding: 10px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    .btn-lock { background: var(--primary); color: white; }
+
+    /* Modals & Inputs */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-content { background: var(--card-bg); padding: 24px; border-radius: 12px; width: 90%; max-width: 500px; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; }
     input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 16px;
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      border-radius: 6px;
+      width: 100%; padding: 10px; margin: 6px 0 12px 0; background: var(--bg-color);
+      border: 1px solid var(--border-color); color: var(--text-color); border-radius: 6px; box-sizing: border-box;
     }
-    button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover { background: var(--primary-hover); }
 
-    /* Main Dashboard Layout */
-    #adminDashboard { display: none; max-width: 1200px; margin: 0 auto; }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+    /* Admin Control Center */
+    #adminDashboard { display: none; background: var(--card-bg); border: 2px solid var(--primary); border-radius: 12px; padding: 20px; margin-top: 30px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
+    .stat-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-align: center; }
+    .stat-card p { font-size: 20px; font-weight: bold; color: var(--primary); margin: 5px 0 0 0; }
+    .admin-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .admin-box { background: var(--bg-color); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; }
     
-    /* Stats Grid */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
-    .stat-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 10px; text-align: center; }
-    .stat-card h3 { margin: 0; color: var(--text-muted); font-size: 14px; }
-    .stat-card p { font-size: 24px; font-weight: bold; margin: 8px 0 0 0; color: var(--primary); }
-
-    /* Control Sections Layout */
-    .dashboard-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-    .section-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; }
-    .section-box h3 { margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; font-size: 16px; }
-
-    /* Tables */
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
     th, td { border: 1px solid var(--border-color); padding: 8px; text-align: left; }
-    th { background: var(--bg-color); }
+    th { background: var(--card-bg); }
+    .link-row { display: flex; gap: 6px; }
 
-    .link-row { display: flex; gap: 8px; margin-bottom: 8px; }
-    .badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
-    .badge-success { background: var(--success); color: black; }
+    /* Floating AI Help Button & Chat Modal */
+    .chat-trigger-btn {
+      position: fixed; bottom: 20px; right: 20px; z-index: 999;
+      background: var(--primary); color: white; border: none; padding: 12px 18px;
+      border-radius: 30px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
   </style>
 </head>
 <body>
 
-  <!-- 1. Owner Login Screen -->
-  <div id="loginScreen">
-    <h2>🔒 Owner Login</h2>
-    <form onsubmit="handleLogin(event)">
-      <label style="display:block; text-align:left; font-size:12px;">Admin Password</label>
-      <input type="password" id="adminPass" placeholder="Enter Password" required>
-      <button type="submit" style="width:100%;">Login to Dashboard</button>
-    </form>
+  <!-- Top Navigation Header -->
+  <div class="nav-bar">
+    <div class="logo-text">CGICinema Hub</div>
+    <button class="btn-vip-header" onclick="openModal('subscriptionModal')">👑 VIP Subscription</button>
   </div>
 
-  <!-- 2. Main Admin Dashboard -->
+  <!-- Google AdSense Top Ad Slot (Free User Earning) -->
+  <div id="adSlotTop" class="ad-banner-slot">
+    <span>📢 Sponsor / Google AdSense Advertisement Banner</span>
+  </div>
+
+  <!-- Public Customer Notice -->
+  <div id="publicNotice"></div>
+
+  <!-- Public Content Section -->
+  <h2 style="font-size: 18px; margin-bottom: 12px;">🎬 Movies, Videos & ZIP Downloads</h2>
+  <div class="content-grid" id="publicContentGrid"></div>
+
+  <!-- VIP Subscription & Dynamic QR Modal -->
+  <div id="subscriptionModal" class="modal">
+    <div class="modal-content">
+      <h2 style="text-align: center; margin-top: 0;">Unlock VIP Pass</h2>
+      <p style="text-align: center; font-size: 12px; color: var(--text-muted);">Get 100% Ad-Free & Unlimited Downloads Access</p>
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <div style="flex:1; background: var(--bg-color); padding:10px; border-radius:8px; text-align:center;">
+          <h4>VIP Monthly</h4>
+          <p style="font-size:18px; font-weight:bold; color:var(--success);">₹99</p>
+          <button onclick="showPayment(99, 'VIP Monthly')" class="btn-action btn-lock">Select Plan</button>
+        </div>
+        <div style="flex:1; background: var(--bg-color); padding:10px; border-radius:8px; text-align:center;">
+          <h4>VIP Yearly</h4>
+          <p style="font-size:18px; font-weight:bold; color:var(--success);">₹499</p>
+          <button onclick="showPayment(499, 'VIP Yearly')" class="btn-action btn-lock">Select Plan</button>
+        </div>
+      </div>
+
+      <div id="qrSection" style="display: none; text-align: center; border-top: 1px solid var(--border-color); padding-top: 15px;">
+        <h4 id="planTitle" style="margin: 5px 0;"></h4>
+        <img id="qrImage" src="" alt="UPI QR Code" style="width: 180px; height: 180px; border-radius: 8px; background: white; padding: 5px;">
+        <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0;">UPI ID: <strong>Nb2525@ibl</strong></p>
+        
+        <form onsubmit="submitVerification(event)">
+          <input type="text" id="utrInput" placeholder="Enter 12-Digit UTR / Transaction ID" pattern="[0-9]{12}" required>
+          <button type="submit" class="btn-action" style="background: var(--success);">Submit Transaction ID</button>
+        </form>
+      </div>
+      <button onclick="closeModal('subscriptionModal')" class="btn-action" style="background: transparent; color: var(--text-muted); margin-top:10px;">Close Window</button>
+    </div>
+  </div>
+
+  <!-- AI Help Chat Floating Trigger Button -->
+  <button class="chat-trigger-btn" onclick="toggleHelpChat()">💬 AI Help & Support</button>
+
+  <!-- AI Help Chat Window (Secret Login Container) -->
+  <div id="helpChatModal" class="modal" style="align-items: flex-end; justify-content: flex-end; padding: 20px;">
+    <div class="modal-content" style="width: 100%; max-width: 350px; margin: 0; height: 430px; display: flex; flex-direction: column;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+        <h3 style="margin: 0; font-size: 14px;">🤖 AI Help Assistant</h3>
+        <span onclick="toggleHelpChat()" style="cursor: pointer; font-size: 18px;">&times;</span>
+      </div>
+
+      <div id="chatBox" style="flex: 1; overflow-y: auto; margin: 10px 0; padding: 5px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: var(--bg-color); padding: 8px 12px; border-radius: 8px; font-size: 12px; max-width: 85%;">
+          Namaste! Main aapki kya sahayata kar sakta hu? (VIP Plans, Payment ya Downloads ke baare me poochein)
+        </div>
+      </div>
+
+      <form onsubmit="handleChatSubmit(event)" style="display: flex; gap: 6px; margin: 0;">
+        <input type="text" id="chatInput" placeholder="Type message or support code..." style="margin: 0; font-size: 12px;" required>
+        <button type="submit" style="background: var(--primary); border: none; color: white; padding: 0 14px; border-radius: 6px; cursor: pointer; font-weight:bold;">Send</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Owner Dashboard Center (Hidden by Default) -->
   <div id="adminDashboard">
-    
-    <div class="top-bar">
-      <h2>👑 Website Master Control Panel</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+      <h2 style="margin:0; font-size:20px;">👑 Master Owner Dashboard</h2>
       <div>
-        <label>Theme: </label>
-        <select id="themeSelect" onchange="changeTheme(this.value)" style="width:auto; display:inline-block; margin:0 10px 0 0;">
-          <option value="dark">Dark Theme (Default)</option>
+        <select id="themeSelect" onchange="changeTheme(this.value)" style="width:auto; margin:0 5px;">
+          <option value="dark">Dark Theme</option>
           <option value="light">Light Theme</option>
           <option value="ocean">Ocean Blue</option>
         </select>
-        <button onclick="handleLogout()" style="background:var(--danger);">Logout</button>
+        <button onclick="logoutAdmin()" style="background:var(--danger); border:none; color:white; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Logout</button>
       </div>
     </div>
 
-    <!-- Analytics & Earnings Stats -->
+    <!-- Live Earnings & Analytical Stats -->
     <div class="stats-grid">
-      <div class="stat-card">
-        <h3>Total Earnings</h3>
-        <p id="totalEarnings">₹4,950</p>
-      </div>
-      <div class="stat-card">
-        <h3>Active VIP Users</h3>
-        <p id="activeVipCount">14 Users</p>
-      </div>
-      <div class="stat-card">
-        <h3>Total Movies/Files</h3>
-        <p id="totalMediaCount">2</p>
-      </div>
-      <div class="stat-card">
-        <h3>AdSense Revenue</h3>
-        <p id="adSenseEarnings">₹1,200</p>
-      </div>
+      <div class="stat-card"><h3>Total Earnings</h3><p id="statTotalEarnings">₹4,950</p></div>
+      <div class="stat-card"><h3>Active VIP Users</h3><p>14 Users</p></div>
+      <div class="stat-card"><h3>Total Media Items</h3><p id="statTotalMedia">0</p></div>
+      <div class="stat-card"><h3>AdSense Revenue</h3><p>₹1,200</p></div>
     </div>
 
-    <div class="dashboard-sections">
-
-      <!-- Section: Infinite Movie / Video / ZIP Upload Manager -->
-      <div class="section-box">
+    <div class="admin-sections">
+      
+      <!-- Infinite Link Creator (Movies, Videos, ZIP Files) -->
+      <div class="admin-box">
         <h3>🎬 Add Movie / Video / ZIP Links</h3>
-        <form onsubmit="saveMediaItem(event)">
-          <input type="text" id="mediaTitle" placeholder="Title / Movie Name (e.g. Action Movie 2026)" required>
-          <select id="mediaType">
+        <form onsubmit="publishMedia(event)">
+          <input type="text" id="mTitle" placeholder="Title / Movie Name (e.g. Pushpa 2 / Source Code)" required>
+          <select id="mType">
             <option value="Movie">Movie (Direct Link)</option>
-            <option value="Video">Video Stream Link</option>
+            <option value="Video">Video Stream</option>
             <option value="ZIP">ZIP Download File</option>
           </select>
-          
-          <!-- Infinite Link Container -->
-          <label style="font-size:12px; color:var(--text-muted);">Download / Stream Links (Dynamic):</label>
-          <div id="linksContainer">
+          <select id="mAccess">
+            <option value="Free">Free Access (For Everyone)</option>
+            <option value="VIP">VIP Locked (Paid Users Only)</option>
+          </select>
+
+          <label style="font-size:11px; color:var(--text-muted);">Dynamic Infinite Server Links:</label>
+          <div id="dynamicLinkContainer">
             <div class="link-row">
-              <input type="text" placeholder="Link Server 1 (e.g. 720p / Mega)" class="media-link" required>
+              <input type="text" placeholder="Download Server Link 1" class="m-link-input" required>
             </div>
           </div>
-          <button type="button" onclick="addLinkInput()" style="background:#4b5563; font-size:12px; margin-bottom:12px;">+ Add Next Link Option</button>
+          <button type="button" onclick="addMoreLinkInput()" style="background:#4b5563; color:white; border:none; padding:4px 8px; font-size:11px; border-radius:4px; margin-bottom:10px; cursor:pointer;">+ Add Next Link Option</button>
 
-          <button type="submit" style="width:100%;">Publish to Website</button>
+          <button type="submit" class="btn-action" style="background:var(--primary);">Publish Item Live</button>
         </form>
       </div>
 
-      <!-- Section: Global Notice Board Control -->
-      <div class="section-box">
-        <h3>📢 Public Customer Notice</h3>
-        <textarea id="noticeText" rows="4" placeholder="Type notice for website visitors..."></textarea>
-        <button onclick="updateNotice()" style="width:100%;">BroadCast Notice</button>
+      <!-- Public Customer Notice Control -->
+      <div class="admin-box">
+        <h3>📢 Customer Notice Board</h3>
+        <textarea id="noticeInput" rows="3" placeholder="Write announcement message for visitors..."></textarea>
+        <button onclick="saveNotice()" class="btn-action" style="background:var(--primary);">Publish Announcement</button>
+        <button onclick="clearNotice()" class="btn-action" style="background:var(--danger); margin-top:4px;">Remove Notice</button>
       </div>
 
-      <!-- Section: Bank & Payment Gateway Details -->
-      <div class="section-box">
-        <h3>🏦 Bank Transfer & UPI Settings</h3>
-        <input type="text" id="bankName" placeholder="Bank Name" value="State Bank of India">
-        <input type="text" id="accNumber" placeholder="Account Number" value="XXXXXX2754">
-        <input type="text" id="ifscCode" placeholder="IFSC Code" value="SBIN000XXXX">
-        <input type="text" id="adminUpi" placeholder="UPI ID" value="Nb2525@ibl">
-        <button onclick="saveBankDetails()" style="width:100%;">Save Payment Gateway Info</button>
-      </div>
-
-      <!-- Section: AdSense & Ad Control -->
-      <div class="section-box">
-        <h3>⚡ Google AdSense & Ads Control</h3>
-        <label style="font-size:12px;">AdSense Publisher Code / Script:</label>
-        <textarea id="adSenseScript" rows="3" placeholder="Paste <script async src=...></script>"></textarea>
-        <select id="adStatus">
-          <option value="enabled">Ads Active (Show to Free Users)</option>
-          <option value="disabled">Disable All Ads</option>
+      <!-- AdSense & Payment Account Controls -->
+      <div class="admin-box">
+        <h3>⚡ AdSense & Payment Settings</h3>
+        <label style="font-size:11px;">Google AdSense Control:</label>
+        <select id="adControlSelect" onchange="toggleAds(this.value)">
+          <option value="Active">Ads Active (Show to Free Users)</option>
+          <option value="Disabled">Disable All Ads</option>
         </select>
-        <button onclick="saveAdSettings()" style="width:100%;">Save Ad Settings</button>
-      </div>
 
-      <!-- Section: Customer & Subscription Records Table -->
-      <div class="section-box" style="grid-column: 1 / -1;">
-        <h3>📊 Customer Records & Active Plan History</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Customer Name / User</th>
-              <th>Plan Joined</th>
-              <th>Amount</th>
-              <th>UTR / Transaction ID</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="customerTableBody">
-            <tr>
-              <td>Rahul Sharma</td>
-              <td>VIP Monthly</td>
-              <td>₹99</td>
-              <td>423456789012</td>
-              <td><span class="badge badge-success">Active</span></td>
-            </tr>
-            <tr>
-              <td>Amit Kumar</td>
-              <td>VIP Yearly</td>
-              <td>₹499</td>
-              <td>987654321098</td>
-              <td><span class="badge badge-success">Active</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Section: Live Media Preview (What Users See) -->
-      <div class="section-box" style="grid-column: 1 / -1;">
-        <h3>📂 Media Directory (Movies, Videos, ZIP Files)</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Title / Name</th>
-              <th>Type</th>
-              <th>Available Download Links</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="mediaTableBody">
-            <!-- Dynamic items load here -->
-          </tbody>
-        </table>
+        <label style="font-size:11px; margin-top:10px; display:block;">Bank & UPI Details:</label>
+        <input type="text" value="Bank: SBI | A/C: XXXXXX2754 | IFSC: SBIN000XXXX" readonly>
+        <input type="text" value="UPI ID: Nb2525@ibl" readonly>
       </div>
 
     </div>
+
+    <!-- Live Uploaded Media Management Directory -->
+    <div class="admin-box" style="margin-top: 20px;">
+      <h3>📂 Uploaded Items Directory</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Access Type</th>
+            <th>Active Links</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="mediaTableBody"></tbody>
+      </table>
+    </div>
+
   </div>
 
   <script>
-    // Demo State Storage
+    // Configuration Setup
+    const OWNER_PASS = "Nadeem@2002"; // Secret Owner Passcode[span_2](start_span)[span_2](end_span)
+    const UPI_ID = "Nb2525@ibl"; // Owner UPI ID[span_3](start_span)[span_3](end_span)
+    
     let mediaList = [
-      { id: 1, title: "Avatar 3 (2026)", type: "Movie", links: ["https://link1.com/720p", "https://link2.com/1080p"] },
-      { id: 2, title: "Source Code Assets", type: "ZIP", links: ["https://drive.link/file.zip"] }
+      { id: 1, title: "Avengers Endgame (4K)", type: "Movie", access: "Free", links: ["https://server1.com/watch", "https://server2.com/watch"] },
+      { id: 2, title: "Premimum VFX Assets Pack", type: "ZIP", access: "VIP", links: ["https://drive.link/pack.zip"] }
     ];
 
-    // 1. Authentication System
-    function handleLogin(e) {
-      e.preventDefault();
-      const pass = document.getElementById("adminPass").value;
-      if (pass === "Nadeem@2002") {
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("adminDashboard").style.display = "block";
-        renderMediaTable();
-      } else {
-        alert("Incorrect Admin Password!");
+    window.onload = function() {
+      renderPublicContent();
+    };
+
+    function openModal(id) { document.getElementById(id).style.display = "flex"; }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+
+    // AI Help Chat & Secret Owner Access Engine
+    function toggleHelpChat() {
+      const chatModal = document.getElementById("helpChatModal");
+      chatModal.style.display = (chatModal.style.display === "none" || chatModal.style.display === "") ? "flex" : "none";
+    }
+
+    function handleChatSubmit(event) {
+      event.preventDefault();
+      const inputEl = document.getElementById("chatInput");
+      const userMsg = inputEl.value.trim();
+      const chatBox = document.getElementById("chatBox");
+
+      if (!userMsg) return;
+
+      // Render User Message
+      chatBox.innerHTML += `
+        <div style="background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; align-self: flex-end; max-width: 85%;">
+          ${userMsg}
+        </div>
+      `;
+      inputEl.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Check Secret Password[span_4](start_span)[span_4](end_span)
+      if (userMsg === OWNER_PASS) {
+        setTimeout(() => {
+          chatBox.innerHTML += `
+            <div style="background: #22c55e; color: black; padding: 8px 12px; border-radius: 8px; font-size: 12px; align-self: flex-start; font-weight: bold;">
+              👑 Owner Access Verified! Opening Master Dashboard...
+            </div>
+          `;
+          chatBox.scrollTop = chatBox.scrollHeight;
+
+          setTimeout(() => {
+            toggleHelpChat();
+            document.getElementById("adminDashboard").style.display = "block";
+            renderAdminTable();
+            document.getElementById("adminDashboard").scrollIntoView({ behavior: 'smooth' });
+          }, 1000);
+        }, 500);
+
+        return;
       }
+
+      // Automated AI Support Responses for Regular Visitors
+      setTimeout(() => {
+        let aiReply = "Aapka message mil gaya hai. VIP Pass le kar fully ad-free access pane ke liye VIP Subscription button par click karein.";
+        
+        if (userMsg.toLowerCase().includes("pay") || userMsg.toLowerCase().includes("upi") || userMsg.toLowerCase().includes("qr")) {
+          aiReply = `Payment ke liye VIP Subscription modal me ja kar UPI ID (${UPI_ID}) scan karein.`;
+        } else if (userMsg.toLowerCase().includes("download") || userMsg.toLowerCase().includes("movie")) {
+          aiReply = "Download links har card ke niche diye gaye hain. VIP content unlocked accounts ke liye available hai.";
+        }
+
+        chatBox.innerHTML += `
+          <div style="background: var(--bg-color); padding: 8px 12px; border-radius: 8px; font-size: 12px; align-self: flex-start; max-width: 85%;">
+            ${aiReply}
+          </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 600);
     }
 
-    function handleLogout() {
+    function logoutAdmin() {
       document.getElementById("adminDashboard").style.display = "none";
-      document.getElementById("loginScreen").style.display = "block";
     }
 
-    // 2. Infinite Link Creator Engine
-    function addLinkInput() {
-      const container = document.getElementById("linksContainer");
-      const linkCount = container.children.length + 1;
+    // Dynamic Infinite Link Creator
+    function addMoreLinkInput() {
+      const container = document.getElementById("dynamicLinkContainer");
+      const count = container.children.length + 1;
       const div = document.createElement("div");
       div.className = "link-row";
-      div.innerHTML = `<input type="text" placeholder="Link Server ${linkCount}" class="media-link" required>`;
+      div.innerHTML = `<input type="text" placeholder="Download Server Link ${count}" class="m-link-input" required>`;
       container.appendChild(div);
     }
 
-    // 3. Save Movie / ZIP / Video item
-    function saveMediaItem(e) {
+    // Publish Media Item
+    function publishMedia(e) {
       e.preventDefault();
-      const title = document.getElementById("mediaTitle").value;
-      const type = document.getElementById("mediaType").value;
-      const linkElements = document.getElementsByClassName("media-link");
+      const title = document.getElementById("mTitle").value;
+      const type = document.getElementById("mType").value;
+      const access = document.getElementById("mAccess").value;
       
+      const linkInputs = document.getElementsByClassName("m-link-input");
       let links = [];
-      for (let el of linkElements) {
-        if (el.value.trim() !== "") links.push(el.value.trim());
+      for (let input of linkInputs) {
+        if(input.value.trim() !== "") links.push(input.value.trim());
       }
 
-      const newItem = { id: Date.now(), title, type, links };
-      mediaList.push(newItem);
+      mediaList.push({ id: Date.now(), title, type, access, links });
       
-      // Clear inputs
-      document.getElementById("mediaTitle").value = "";
-      document.getElementById("linksContainer").innerHTML = `
-        <div class="link-row"><input type="text" placeholder="Link Server 1" class="media-link" required></div>
+      document.getElementById("mTitle").value = "";
+      document.getElementById("dynamicLinkContainer").innerHTML = `
+        <div class="link-row"><input type="text" placeholder="Download Server Link 1" class="m-link-input" required></div>
       `;
-      
-      renderMediaTable();
-      document.getElementById("totalMediaCount").innerText = mediaList.length;
-      alert("Item Successfully Added & Published!");
+
+      renderAdminTable();
+      renderPublicContent();
+      alert("Media Item Published Live!");
     }
 
-    // 4. Render Table
-    function renderMediaTable() {
+    // Render Public Card Grid
+    function renderPublicContent() {
+      const grid = document.getElementById("publicContentGrid");
+      grid.innerHTML = "";
+      
+      mediaList.forEach(item => {
+        const isVip = item.access === "VIP";
+        let linksButtons = item.links.map((l, i) => `<a href="${l}" target="_blank" style="display:inline-block; margin:3px 3px 0 0; font-size:11px; color:#3b82f6;">[Server ${i+1}]</a>`).join("");
+        
+        grid.innerHTML += `
+          <div class="card">
+            <span class="badge ${isVip ? 'badge-vip' : 'badge-free'}">${isVip ? 'VIP LOCKED' : 'FREE'}</span>
+            <h3 style="margin: 6px 0; font-size:16px;">${item.title}</h3>
+            <p style="font-size:12px; color:var(--text-muted); margin:0 0 10px 0;">Format: ${item.type}</p>
+            ${isVip ? 
+              `<button onclick="openModal('subscriptionModal')" class="btn-action btn-lock">Unlock with VIP 🔒</button>` : 
+              `<div style="font-size:12px;"><strong>Download Links:</strong><br>${linksButtons}</div>`
+            }
+          </div>
+        `;
+      });
+    }
+
+    // Render Admin Table
+    function renderAdminTable() {
       const tbody = document.getElementById("mediaTableBody");
       tbody.innerHTML = "";
+      document.getElementById("statTotalMedia").innerText = mediaList.length;
+
       mediaList.forEach(item => {
-        let linksHtml = item.links.map((l, i) => `<a href="${l}" target="_blank" style="color:var(--primary); margin-right:8px;">[Server ${i+1}]</a>`).join("");
+        let linksList = item.links.map((l, i) => `<a href="${l}" target="_blank">S${i+1}</a>`).join(", ");
         tbody.innerHTML += `
           <tr>
             <td><strong>${item.title}</strong></td>
-            <td><span class="badge" style="background:#3b82f6; color:white;">${item.type}</span></td>
-            <td>${linksHtml}</td>
-            <td><button onclick="deleteItem(${item.id})" style="background:var(--danger); padding:4px 8px; font-size:11px;">Delete</button></td>
+            <td>${item.type}</td>
+            <td>${item.access}</td>
+            <td>${linksList}</td>
+            <td><button onclick="deleteMedia(${item.id})" style="background:var(--danger); border:none; color:white; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer; font-weight:bold;">Delete</button></td>
           </tr>
         `;
       });
     }
 
-    function deleteItem(id) {
+    function deleteMedia(id) {
       mediaList = mediaList.filter(item => item.id !== id);
-      renderMediaTable();
-      document.getElementById("totalMediaCount").innerText = mediaList.length;
+      renderAdminTable();
+      renderPublicContent();
     }
 
-    // 5. Additional System Options
-    function changeTheme(themeName) {
-      document.documentElement.setAttribute("data-theme", themeName);
+    // Payment Gateway & Dynamic QR Logic
+    function showPayment(amount, planName) {
+      document.getElementById("qrSection").style.display = "block";
+      document.getElementById("planTitle").innerText = planName + " - ₹" + amount;
+      
+      const upiUrl = `upi://pay?pa=${UPI_ID}&pn=CGICinema%20VIP&am=${amount}&cu=INR`;
+      document.getElementById("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
     }
 
-    function updateNotice() {
-      const note = document.getElementById("noticeText").value;
-      alert("Customer Notice Updated: " + note);
+    function submitVerification(e) {
+      e.preventDefault();
+      alert("12-Digit UTR Submitted Successfully! Access will be activated shortly.");
+      closeModal('subscriptionModal');
     }
 
-    function saveBankDetails() {
-      alert("Bank Transfer & UPI Info Updated Successfully!");
+    // Customer Notice Controls
+    function saveNotice() {
+      const text = document.getElementById("noticeInput").value;
+      const noticeDiv = document.getElementById("publicNotice");
+      if(text.trim() !== "") {
+        noticeDiv.innerText = "📢 Notice: " + text;
+        noticeDiv.style.display = "block";
+        alert("Notice Published to Website!");
+      }
+    }
+    
+    function clearNotice() {
+      document.getElementById("publicNotice").style.display = "none";
+      document.getElementById("noticeInput").value = "";
     }
 
-    function saveAdSettings() {
-      alert("AdSense Configuration Saved!");
+    // Themes & Ad Controls
+    function changeTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+
+    function toggleAds(status) {
+      const adSlot = document.getElementById("adSlotTop");
+      if(status === "Disabled") {
+        adSlot.style.display = "none";
+      } else {
+        adSlot.style.display = "block";
+      }
+      alert("AdSense Ads Display: " + status);
     }
   </script>
 </body>
