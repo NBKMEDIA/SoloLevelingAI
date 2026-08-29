@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CGICinema - VIP Media & Streaming Portal</title>
+  <title>NBMedia - Live Streaming & Downloads</title>
   <style>
     :root {
       --bg-color: #0d0d11;
@@ -12,7 +12,6 @@
       --text-color: #ffffff;
       --text-muted: #aaaaaa;
       --primary: #8b5cf6;
-      --primary-hover: #7c3aed;
       --success: #22c55e;
       --danger: #ef4444;
     }
@@ -24,7 +23,6 @@
       --text-color: #111827;
       --text-muted: #6b7280;
       --primary: #6366f1;
-      --primary-hover: #4f46e5;
     }
 
     [data-theme="ocean"] {
@@ -34,15 +32,13 @@
       --text-color: #f8fafc;
       --text-muted: #94a3b8;
       --primary: #06b6d4;
-      --primary-hover: #0891b2;
     }
 
     * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; transition: background 0.2s, color 0.2s; }
     body { background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 15px; }
 
-    /* Header Nav */
     .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
-    .logo-text { font-size: 20px; font-weight: bold; color: var(--primary); }
+    .logo-text { font-size: 22px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
     .btn-vip-header {
       background: linear-gradient(45deg, #8b5cf6, #ec4899);
       color: white; border: none; padding: 10px 20px;
@@ -50,29 +46,26 @@
       box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
     }
 
-    /* AdSense Banner Slot */
     .ad-banner-slot {
       background: var(--card-bg); border: 1px dashed var(--border-color);
-      padding: 15px; text-align: center; margin-bottom: 20px; border-radius: 8px;
+      padding: 12px; text-align: center; margin-bottom: 20px; border-radius: 8px;
       font-size: 12px; color: var(--text-muted);
     }
 
-    /* Customer Notice */
     #publicNotice {
       background: #1e1b4b; border: 1px solid #4338ca; color: #c7d2fe;
       padding: 12px; border-radius: 8px; margin-bottom: 20px; display: none; text-align: center; font-size: 14px;
     }
 
-    /* Public Content Grid */
     .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 30px; }
-    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; position: relative; }
     .badge { font-size: 10px; font-weight: bold; padding: 3px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
     .badge-free { background: var(--success); color: black; }
     .badge-vip { background: #eab308; color: black; }
+    .badge-new { background: var(--primary); color: white; margin-left: 5px; }
     .btn-action { width: 100%; padding: 10px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
     .btn-lock { background: var(--primary); color: white; }
 
-    /* Modals & Inputs */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
     .modal-content { background: var(--card-bg); padding: 24px; border-radius: 12px; width: 90%; max-width: 500px; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; }
     input, select, textarea {
@@ -80,7 +73,6 @@
       border: 1px solid var(--border-color); color: var(--text-color); border-radius: 6px; box-sizing: border-box;
     }
 
-    /* Admin Control Center */
     #adminDashboard { display: none; background: var(--card-bg); border: 2px solid var(--primary); border-radius: 12px; padding: 20px; margin-top: 30px; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
     .stat-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-align: center; }
@@ -93,7 +85,6 @@
     th { background: var(--card-bg); }
     .link-row { display: flex; gap: 6px; }
 
-    /* Floating AI Help Button & Chat Modal */
     .chat-trigger-btn {
       position: fixed; bottom: 20px; right: 20px; z-index: 999;
       background: var(--primary); color: white; border: none; padding: 12px 18px;
@@ -103,29 +94,29 @@
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
   <div class="nav-bar">
-    <div class="logo-text">CGICinema Hub</div>
+    <div class="logo-text">NBMedia</div>
     <button class="btn-vip-header" onclick="openModal('subscriptionModal')">👑 VIP Subscription</button>
   </div>
 
-  <!-- Google AdSense Top Ad Slot (Free User Earning) -->
   <div id="adSlotTop" class="ad-banner-slot">
-    <span>📢 Sponsor / Google AdSense Advertisement Banner</span>
+    <span>📢 NBMedia Sponsor / Google AdSense Banner</span>
   </div>
 
-  <!-- Public Customer Notice -->
   <div id="publicNotice"></div>
 
-  <!-- Public Content Section -->
-  <h2 style="font-size: 18px; margin-bottom: 12px;">🎬 Movies, Videos & ZIP Downloads</h2>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+    <h2 style="font-size: 18px; margin:0;">🔥 All NBMedia Uploaded Content</h2>
+    <span style="font-size:12px; color:var(--text-muted);" id="liveUploadCounter">Total Items: 0</span>
+  </div>
+
   <div class="content-grid" id="publicContentGrid"></div>
 
-  <!-- VIP Subscription & Dynamic QR Modal -->
+  <!-- Subscription Modal -->
   <div id="subscriptionModal" class="modal">
     <div class="modal-content">
-      <h2 style="text-align: center; margin-top: 0;">Unlock VIP Pass</h2>
-      <p style="text-align: center; font-size: 12px; color: var(--text-muted);">Get 100% Ad-Free & Unlimited Downloads Access</p>
+      <h2 style="text-align: center; margin-top: 0;">NBMedia VIP Pass</h2>
+      <p style="text-align: center; font-size: 12px; color: var(--text-muted);">Get 100% Ad-Free & Unlimited Downloads</p>
       
       <div style="display: flex; gap: 10px; margin-bottom: 15px;">
         <div style="flex:1; background: var(--bg-color); padding:10px; border-radius:8px; text-align:center;">
@@ -154,21 +145,21 @@
     </div>
   </div>
 
-  <!-- AI Help Chat Floating Trigger Button -->
-  <button class="chat-trigger-btn" onclick="toggleHelpChat()">💬 AI Help & Support</button>
+  <!-- Help Chat Button -->
+  <button class="chat-trigger-btn" onclick="toggleHelpChat()">💬 NBMedia Support</button>
 
-  <!-- AI Help Chat Window (Secret Login Container) -->
+  <!-- AI Help Chat Window -->
   <div id="helpChatModal" class="modal" style="align-items: flex-end; justify-content: flex-end; padding: 20px;">
     <div class="modal-content" style="width: 100%; max-width: 350px; margin: 0; height: 430px; display: flex; flex-direction: column;">
       
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-        <h3 style="margin: 0; font-size: 14px;">🤖 AI Help Assistant</h3>
+        <h3 style="margin: 0; font-size: 14px;">🤖 NBMedia AI Support</h3>
         <span onclick="toggleHelpChat()" style="cursor: pointer; font-size: 18px;">&times;</span>
       </div>
 
       <div id="chatBox" style="flex: 1; overflow-y: auto; margin: 10px 0; padding: 5px; display: flex; flex-direction: column; gap: 8px;">
         <div style="background: var(--bg-color); padding: 8px 12px; border-radius: 8px; font-size: 12px; max-width: 85%;">
-          Namaste! Main aapki kya sahayata kar sakta hu? (VIP Plans, Payment ya Downloads ke baare me poochein)
+          Welcome to NBMedia! Aapki kya sahayata kar sakta hu?
         </div>
       </div>
 
@@ -180,10 +171,10 @@
     </div>
   </div>
 
-  <!-- Owner Dashboard Center (Hidden by Default) -->
+  <!-- Owner Dashboard Center -->
   <div id="adminDashboard">
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-      <h2 style="margin:0; font-size:20px;">👑 Master Owner Dashboard</h2>
+      <h2 style="margin:0; font-size:20px;">👑 NBMedia Owner Control Dashboard</h2>
       <div>
         <select id="themeSelect" onchange="changeTheme(this.value)" style="width:auto; margin:0 5px;">
           <option value="dark">Dark Theme</option>
@@ -194,32 +185,30 @@
       </div>
     </div>
 
-    <!-- Live Earnings & Analytical Stats -->
     <div class="stats-grid">
       <div class="stat-card"><h3>Total Earnings</h3><p id="statTotalEarnings">₹4,950</p></div>
       <div class="stat-card"><h3>Active VIP Users</h3><p>14 Users</p></div>
-      <div class="stat-card"><h3>Total Media Items</h3><p id="statTotalMedia">0</p></div>
-      <div class="stat-card"><h3>AdSense Revenue</h3><p>₹1,200</p></div>
+      <div class="stat-card"><h3>Total Media Uploads</h3><p id="statTotalMedia">0</p></div>
+      <div class="stat-card"><h3>AdSense Status</h3><p id="statAdStatus">Active</p></div>
     </div>
 
     <div class="admin-sections">
       
-      <!-- Infinite Link Creator (Movies, Videos, ZIP Files) -->
       <div class="admin-box">
-        <h3>🎬 Add Movie / Video / ZIP Links</h3>
+        <h3>🎬 Add New Upload (NBMedia)</h3>
         <form onsubmit="publishMedia(event)">
-          <input type="text" id="mTitle" placeholder="Title / Movie Name (e.g. Pushpa 2 / Source Code)" required>
+          <input type="text" id="mTitle" placeholder="Title / Name (e.g. Action Movie / VIP Zip File)" required>
           <select id="mType">
             <option value="Movie">Movie (Direct Link)</option>
             <option value="Video">Video Stream</option>
             <option value="ZIP">ZIP Download File</option>
           </select>
           <select id="mAccess">
-            <option value="Free">Free Access (For Everyone)</option>
-            <option value="VIP">VIP Locked (Paid Users Only)</option>
+            <option value="Free">Free Access (For All Users)</option>
+            <option value="VIP">VIP Locked (Download via VIP Plan)</option>
           </select>
 
-          <label style="font-size:11px; color:var(--text-muted);">Dynamic Infinite Server Links:</label>
+          <label style="font-size:11px; color:var(--text-muted);">Dynamic Server Download Links:</label>
           <div id="dynamicLinkContainer">
             <div class="link-row">
               <input type="text" placeholder="Download Server Link 1" class="m-link-input" required>
@@ -231,40 +220,37 @@
         </form>
       </div>
 
-      <!-- Public Customer Notice Control -->
       <div class="admin-box">
         <h3>📢 Customer Notice Board</h3>
-        <textarea id="noticeInput" rows="3" placeholder="Write announcement message for visitors..."></textarea>
-        <button onclick="saveNotice()" class="btn-action" style="background:var(--primary);">Publish Announcement</button>
-        <button onclick="clearNotice()" class="btn-action" style="background:var(--danger); margin-top:4px;">Remove Notice</button>
+        <textarea id="noticeInput" rows="3" placeholder="Write announcement message..."></textarea>
+        <button onclick="saveNotice()" class="btn-action" style="background:var(--primary);">Publish Notice</button>
+        <button onclick="clearNotice()" class="btn-action" style="background:var(--danger); margin-top:4px;">Clear Notice</button>
       </div>
 
-      <!-- AdSense & Payment Account Controls -->
       <div class="admin-box">
-        <h3>⚡ AdSense & Payment Settings</h3>
+        <h3>⚡ Earning & Ad Control</h3>
         <label style="font-size:11px;">Google AdSense Control:</label>
         <select id="adControlSelect" onchange="toggleAds(this.value)">
-          <option value="Active">Ads Active (Show to Free Users)</option>
+          <option value="Active">Show Ads (Free Users Earning)</option>
           <option value="Disabled">Disable All Ads</option>
         </select>
 
-        <label style="font-size:11px; margin-top:10px; display:block;">Bank & UPI Details:</label>
+        <label style="font-size:11px; margin-top:10px; display:block;">Bank & Payment Info:</label>
         <input type="text" value="Bank: SBI | A/C: XXXXXX2754 | IFSC: SBIN000XXXX" readonly>
         <input type="text" value="UPI ID: Nb2525@ibl" readonly>
       </div>
 
     </div>
 
-    <!-- Live Uploaded Media Management Directory -->
     <div class="admin-box" style="margin-top: 20px;">
-      <h3>📂 Uploaded Items Directory</h3>
+      <h3>📂 Uploaded Directory</h3>
       <table>
         <thead>
           <tr>
             <th>Title</th>
             <th>Type</th>
             <th>Access Type</th>
-            <th>Active Links</th>
+            <th>Links Count</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -275,13 +261,12 @@
   </div>
 
   <script>
-    // Configuration Setup
-    const OWNER_PASS = "Nadeem@2002"; // Secret Owner Passcode[span_2](start_span)[span_2](end_span)
-    const UPI_ID = "Nb2525@ibl"; // Owner UPI ID[span_3](start_span)[span_3](end_span)
+    const OWNER_PASS = "Nadeem@2002"; // Secret Password[span_0](start_span)[span_0](end_span)
+    const UPI_ID = "Nb2525@ibl"; // Payment UPI[span_1](start_span)[span_1](end_span)
     
     let mediaList = [
-      { id: 1, title: "Avengers Endgame (4K)", type: "Movie", access: "Free", links: ["https://server1.com/watch", "https://server2.com/watch"] },
-      { id: 2, title: "Premimum VFX Assets Pack", type: "ZIP", access: "VIP", links: ["https://drive.link/pack.zip"] }
+      { id: 1, title: "Action Blockbuster Movie 2026", type: "Movie", access: "Free", links: ["https://server1.com/file1", "https://server2.com/file1"], isNew: true },
+      { id: 2, title: "NBMedia Exclusive VIP Bundle", type: "ZIP", access: "VIP", links: ["https://drive.link/pack.zip"], isNew: true }
     ];
 
     window.onload = function() {
@@ -291,7 +276,6 @@
     function openModal(id) { document.getElementById(id).style.display = "flex"; }
     function closeModal(id) { document.getElementById(id).style.display = "none"; }
 
-    // AI Help Chat & Secret Owner Access Engine
     function toggleHelpChat() {
       const chatModal = document.getElementById("helpChatModal");
       chatModal.style.display = (chatModal.style.display === "none" || chatModal.style.display === "") ? "flex" : "none";
@@ -305,7 +289,6 @@
 
       if (!userMsg) return;
 
-      // Render User Message
       chatBox.innerHTML += `
         <div style="background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; align-self: flex-end; max-width: 85%;">
           ${userMsg}
@@ -314,12 +297,12 @@
       inputEl.value = "";
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      // Check Secret Password[span_4](start_span)[span_4](end_span)
+      // Secret Code Check
       if (userMsg === OWNER_PASS) {
         setTimeout(() => {
           chatBox.innerHTML += `
             <div style="background: #22c55e; color: black; padding: 8px 12px; border-radius: 8px; font-size: 12px; align-self: flex-start; font-weight: bold;">
-              👑 Owner Access Verified! Opening Master Dashboard...
+              👑 Owner Verified! Unlocking NBMedia Control Center...
             </div>
           `;
           chatBox.scrollTop = chatBox.scrollHeight;
@@ -335,14 +318,10 @@
         return;
       }
 
-      // Automated AI Support Responses for Regular Visitors
       setTimeout(() => {
-        let aiReply = "Aapka message mil gaya hai. VIP Pass le kar fully ad-free access pane ke liye VIP Subscription button par click karein.";
-        
+        let aiReply = "Aapka message mil gaya hai. Subscriptions ya Downloads ke baare me janne ke liye VIP button dabaein.";
         if (userMsg.toLowerCase().includes("pay") || userMsg.toLowerCase().includes("upi") || userMsg.toLowerCase().includes("qr")) {
-          aiReply = `Payment ke liye VIP Subscription modal me ja kar UPI ID (${UPI_ID}) scan karein.`;
-        } else if (userMsg.toLowerCase().includes("download") || userMsg.toLowerCase().includes("movie")) {
-          aiReply = "Download links har card ke niche diye gaye hain. VIP content unlocked accounts ke liye available hai.";
+          aiReply = `Payment ke liye UPI ID (${UPI_ID}) scan karke UTR submit karein.`;
         }
 
         chatBox.innerHTML += `
@@ -358,7 +337,6 @@
       document.getElementById("adminDashboard").style.display = "none";
     }
 
-    // Dynamic Infinite Link Creator
     function addMoreLinkInput() {
       const container = document.getElementById("dynamicLinkContainer");
       const count = container.children.length + 1;
@@ -368,7 +346,6 @@
       container.appendChild(div);
     }
 
-    // Publish Media Item
     function publishMedia(e) {
       e.preventDefault();
       const title = document.getElementById("mTitle").value;
@@ -381,7 +358,7 @@
         if(input.value.trim() !== "") links.push(input.value.trim());
       }
 
-      mediaList.push({ id: Date.now(), title, type, access, links });
+      mediaList.unshift({ id: Date.now(), title, type, access, links, isNew: true });
       
       document.getElementById("mTitle").value = "";
       document.getElementById("dynamicLinkContainer").innerHTML = `
@@ -390,33 +367,37 @@
 
       renderAdminTable();
       renderPublicContent();
-      alert("Media Item Published Live!");
+      alert("New Upload Published Live on NBMedia!");
     }
 
-    // Render Public Card Grid
     function renderPublicContent() {
       const grid = document.getElementById("publicContentGrid");
+      const counter = document.getElementById("liveUploadCounter");
       grid.innerHTML = "";
+      counter.innerText = "Total Items: " + mediaList.length;
       
       mediaList.forEach(item => {
         const isVip = item.access === "VIP";
-        let linksButtons = item.links.map((l, i) => `<a href="${l}" target="_blank" style="display:inline-block; margin:3px 3px 0 0; font-size:11px; color:#3b82f6;">[Server ${i+1}]</a>`).join("");
+        let linksButtons = item.links.map((l, i) => `<a href="${l}" target="_blank" style="display:inline-block; margin:3px 3px 0 0; font-size:11px; color:#3b82f6; text-decoration:none; background:rgba(59,130,246,0.1); padding:4px 8px; border-radius:4px;"> Server ${i+1} 📥</a>`).join("");
         
         grid.innerHTML += `
           <div class="card">
-            <span class="badge ${isVip ? 'badge-vip' : 'badge-free'}">${isVip ? 'VIP LOCKED' : 'FREE'}</span>
+            <div>
+              <span class="badge ${isVip ? 'badge-vip' : 'badge-free'}">${isVip ? 'VIP EXCLUSIVE' : 'FREE ACCESS'}</span>
+              ${item.isNew ? `<span class="badge badge-new">NEW UPLOAD</span>` : ''}
+            </div>
             <h3 style="margin: 6px 0; font-size:16px;">${item.title}</h3>
-            <p style="font-size:12px; color:var(--text-muted); margin:0 0 10px 0;">Format: ${item.type}</p>
+            <p style="font-size:12px; color:var(--text-muted); margin:0 0 10px 0;">Category: ${item.type}</p>
             ${isVip ? 
-              `<button onclick="openModal('subscriptionModal')" class="btn-action btn-lock">Unlock with VIP 🔒</button>` : 
-              `<div style="font-size:12px;"><strong>Download Links:</strong><br>${linksButtons}</div>`
+              `<div style="font-size:11px; color:#eab308; margin-bottom:6px;">🔒 Subscription Required to Download</div>
+               <button onclick="openModal('subscriptionModal')" class="btn-action btn-lock">Unlock Download Links 👑</button>` : 
+              `<div style="font-size:12px; border-top:1px solid var(--border-color); padding-top:8px;"><strong>Download Links:</strong><br>${linksButtons}</div>`
             }
           </div>
         `;
       });
     }
 
-    // Render Admin Table
     function renderAdminTable() {
       const tbody = document.getElementById("mediaTableBody");
       tbody.innerHTML = "";
@@ -426,10 +407,10 @@
         let linksList = item.links.map((l, i) => `<a href="${l}" target="_blank">S${i+1}</a>`).join(", ");
         tbody.innerHTML += `
           <tr>
-            <td><strong>${item.title}</strong></td>
+            <td><strong>${item.title}</strong> ${item.isNew ? '<span style="color:#8b5cf6;">(New)</span>':''}</td>
             <td>${item.type}</td>
             <td>${item.access}</td>
-            <td>${linksList}</td>
+            <td>${item.links.length} Links (${linksList})</td>
             <td><button onclick="deleteMedia(${item.id})" style="background:var(--danger); border:none; color:white; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer; font-weight:bold;">Delete</button></td>
           </tr>
         `;
@@ -442,29 +423,27 @@
       renderPublicContent();
     }
 
-    // Payment Gateway & Dynamic QR Logic
     function showPayment(amount, planName) {
       document.getElementById("qrSection").style.display = "block";
       document.getElementById("planTitle").innerText = planName + " - ₹" + amount;
       
-      const upiUrl = `upi://pay?pa=${UPI_ID}&pn=CGICinema%20VIP&am=${amount}&cu=INR`;
+      const upiUrl = `upi://pay?pa=${UPI_ID}&pn=NBMedia%20VIP&am=${amount}&cu=INR`;
       document.getElementById("qrImage").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
     }
 
     function submitVerification(e) {
       e.preventDefault();
-      alert("12-Digit UTR Submitted Successfully! Access will be activated shortly.");
+      alert("UTR Submitted! Verification under process.");
       closeModal('subscriptionModal');
     }
 
-    // Customer Notice Controls
     function saveNotice() {
       const text = document.getElementById("noticeInput").value;
       const noticeDiv = document.getElementById("publicNotice");
       if(text.trim() !== "") {
         noticeDiv.innerText = "📢 Notice: " + text;
         noticeDiv.style.display = "block";
-        alert("Notice Published to Website!");
+        alert("Notice Published Live!");
       }
     }
     
@@ -473,21 +452,16 @@
       document.getElementById("noticeInput").value = "";
     }
 
-    // Themes & Ad Controls
     function changeTheme(theme) {
       document.documentElement.setAttribute("data-theme", theme);
     }
 
     function toggleAds(status) {
       const adSlot = document.getElementById("adSlotTop");
-      if(status === "Disabled") {
-        adSlot.style.display = "none";
-      } else {
-        adSlot.style.display = "block";
-      }
-      alert("AdSense Ads Display: " + status);
+      adSlot.style.display = (status === "Disabled") ? "none" : "block";
+      document.getElementById("statAdStatus").innerText = status;
+      alert("AdSense Display Updated: " + status);
     }
   </script>
 </body>
 </html>
-
