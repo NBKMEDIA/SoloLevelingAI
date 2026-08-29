@@ -3,146 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS STREAM - Premium Movies & Series</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>CINEMA FLIX - Movies, Anime & Web Series</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #0b0f19;
+            color: #f1f5f9;
             min-height: 100vh;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
         }
 
+        /* Fast Loading Light Header */
         header {
-            background: #1e293b;
-            padding: 12px 20px;
+            background: #111827;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #3b82f6;
+            border-bottom: 1px solid #1f2937;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        .logo { font-size: 1.3rem; font-weight: 700; color: #3b82f6; }
-        .logo span { color: #f43f5e; }
-
-        .header-actions { display: flex; gap: 8px; }
-
-        .btn {
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
+        .brand-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #e11d48;
+            letter-spacing: -0.5px;
         }
 
-        .btn-gold { background: linear-gradient(45deg, #f59e0b, #fbbf24); color: #000; }
-        .btn-blue { background: #3b82f6; color: #fff; }
+        .brand-logo span { color: #38bdf8; }
 
-        /* Video Player Section */
-        .player-section {
+        .nav-btns { display: flex; gap: 8px; }
+
+        .btn-sm {
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-sm:active { opacity: 0.7; }
+        .btn-vip { background: #f59e0b; color: #000; }
+        .btn-admin { background: #1f2937; color: #9ca3af; border: 1px solid #374151; }
+
+        /* Smooth Light Video Player Screen */
+        .player-wrapper {
             width: 100%;
-            max-width: 1000px;
-            margin: 15px auto;
+            max-width: 900px;
+            margin: 10px auto;
             padding: 0 10px;
             display: none;
         }
 
-        .video-container {
+        .screen-ratio {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (Landscape / Portrait auto-fit) */
             height: 0;
-            overflow: hidden;
-            border-radius: 12px;
             background: #000;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .video-container iframe, .video-container video {
+        .screen-ratio iframe, .screen-ratio video {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            border: none;
+            border: 0;
         }
 
-        .video-details {
-            margin-top: 10px;
-            padding: 10px;
-            background: #1e293b;
-            border-radius: 8px;
+        .v-details {
+            padding: 10px 4px;
         }
 
-        /* Ad Banners */
-        .ad-container {
+        .v-details h2 { font-size: 1rem; font-weight: 600; color: #f8fafc; }
+        .v-details span { font-size: 0.72rem; color: #e11d48; font-weight: 700; text-transform: uppercase; }
+
+        /* Lightweight Ad Banner Spaces */
+        .ad-slot {
             width: 100%;
-            max-width: 1000px;
+            max-width: 900px;
             margin: 10px auto;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            min-height: 70px;
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed #1f2937;
+            border-radius: 6px;
+            min-height: 60px;
         }
 
-        /* Categories */
-        .categories {
+        /* Fast Horizontal Category Bar */
+        .category-scroll {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
-            padding: 15px 20px;
-            max-width: 1000px;
+            padding: 12px 16px;
+            max-width: 900px;
             margin: 0 auto;
+            scrollbar-width: none;
         }
 
-        .cat-btn {
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #334155;
+        .category-scroll::-webkit-scrollbar { display: none; }
+
+        .chip {
+            background: #111827;
+            color: #9ca3af;
+            border: 1px solid #1f2937;
             padding: 6px 14px;
             border-radius: 20px;
             white-space: nowrap;
             font-size: 0.8rem;
+            font-weight: 500;
             cursor: pointer;
         }
 
-        .cat-btn.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+        .chip.active { background: #e11d48; color: #fff; border-color: #e11d48; }
 
-        /* Grid */
-        .video-grid {
+        /* Minimal Phone-Optimized Grid */
+        .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            padding: 0 20px;
-            max-width: 1000px;
+            padding: 0 16px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        @media (min-width: 600px) {
-            .video-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+        @media (min-width: 500px) {
+            .content-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 768px) {
+            .content-grid { grid-template-columns: repeat(4, 1fr); }
         }
 
-        .card {
-            background: #1e293b;
+        .media-card {
+            background: #111827;
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
+            border: 1px solid #1f2937;
         }
 
-        .card-thumb { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 8px; }
-        .card-title { font-size: 0.85rem; font-weight: 600; color: #f8fafc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .card-type { font-size: 0.7rem; color: #f43f5e; text-transform: uppercase; margin-top: 2px; }
+        .media-thumb {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            background: #1f2937;
+            display: block;
+        }
 
-        /* Modal Screens */
-        .modal {
+        .media-info { padding: 8px; }
+        .media-title { font-size: 0.82rem; font-weight: 600; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .media-tag { font-size: 0.68rem; color: #e11d48; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+
+        /* Fast Modals */
+        .modal-bg {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -150,46 +176,47 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            padding: 15px;
+            padding: 16px;
         }
 
-        .modal-content {
-            background: #1e293b;
+        .modal-box {
+            background: #111827;
+            border: 1px solid #1f2937;
             width: 100%;
-            max-width: 480px;
-            padding: 20px;
+            max-width: 420px;
+            padding: 18px;
             border-radius: 12px;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
 
-        .input-box {
+        .form-input {
             width: 100%;
             padding: 10px;
-            margin: 8px 0;
-            background: #0f172a;
-            border: 1px solid #334155;
+            margin: 6px 0 10px 0;
+            background: #0b0f19;
+            border: 1px solid #1f2937;
             color: #fff;
             border-radius: 6px;
+            font-size: 0.85rem;
         }
 
-        .submit-btn {
+        .btn-action {
             width: 100%;
-            background: #f43f5e;
+            background: #e11d48;
             color: #fff;
             border: none;
             padding: 10px;
             border-radius: 6px;
             font-weight: 600;
-            margin-top: 10px;
+            font-size: 0.85rem;
             cursor: pointer;
         }
 
-        /* Subscription Cards */
-        .plan-card {
-            background: #0f172a;
-            border: 1px solid #3b82f6;
-            padding: 12px;
+        .plan-box {
+            background: #0b0f19;
+            border: 1px solid #1f2937;
+            padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
             display: flex;
@@ -197,137 +224,133 @@
             align-items: center;
         }
 
-        .bank-details-box {
-            background: #0f172a;
+        .bank-info {
+            background: #0b0f19;
             border: 1px dashed #f59e0b;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             margin: 10px 0;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">NEXUS <span>STREAM</span></div>
-        <div class="header-actions">
-            <button class="btn btn-gold" onclick="openSubModal()">👑 Remove Ads / VIP</button>
-            <button class="btn btn-blue" onclick="openOwnerModal()">Owner Login</button>
+        <div class="brand-logo">CINEMA <span>FLIX</span></div>
+        <div class="nav-btns">
+            <button class="btn-sm btn-vip" onclick="openSubModal()">👑 No Ads Plan</button>
+            <button class="btn-sm btn-admin" onclick="openOwnerModal()">Owner</button>
         </div>
     </header>
 
-    <div class="ad-container" id="topAdArea">
-        <small style="color:#64748b;">[ AdSense Space ]</small>
+    <div class="ad-slot" id="topAdArea">
+        <small style="color:#4b5563; font-size:0.75rem;">[ AdSpace ]</small>
     </div>
 
-    <div class="player-section" id="playerSection">
-        <div class="video-container" id="videoBox"></div>
-        <div class="video-details">
-            <h2 id="currentTitle" style="font-size: 1.1rem;">Video Title</h2>
-            <p id="currentCategory" style="color:#f43f5e; font-size: 0.8rem; margin-top: 2px;"></p>
+    <div class="player-wrapper" id="playerWrapper">
+        <div class="screen-ratio" id="videoBox"></div>
+        <div class="v-details">
+            <h2 id="currentTitle">Stream Title</h2>
+            <span id="currentCat">MOVIE</span>
         </div>
     </div>
 
-    <div class="categories">
-        <button class="cat-btn active" onclick="filterCategory('all', this)">All Content</button>
-        <button class="cat-btn" onclick="filterCategory('movie', this)">Movies</button>
-        <button class="cat-btn" onclick="filterCategory('anime', this)">Anime</button>
-        <button class="cat-btn" onclick="filterCategory('series', this)">Web Series</button>
-        <button class="cat-btn" onclick="filterCategory('cartoon', this)">Cartoons</button>
+    <div class="category-scroll">
+        <button class="chip active" onclick="filterCategory('all', this)">All</button>
+        <button class="chip" onclick="filterCategory('movie', this)">Movies</button>
+        <button class="chip" onclick="filterCategory('anime', this)">Anime</button>
+        <button class="chip" onclick="filterCategory('series', this)">Series</button>
+        <button class="chip" onclick="filterCategory('cartoon', this)">Cartoons</button>
     </div>
 
-    <div class="video-grid" id="videoGrid"></div>
+    <div class="content-grid" id="videoGrid"></div>
 
-    <div class="ad-container" id="bottomAdArea">
-        <small style="color:#64748b;">[ AdSense Space ]</small>
+    <div class="ad-slot" id="bottomAdArea">
+        <small style="color:#4b5563; font-size:0.75rem;">[ AdSpace ]</small>
     </div>
 
-    <div class="modal" id="subModal">
-        <div class="modal-content">
-            <h3 style="color:#f59e0b; text-align:center;">👑 Choose Premium Plan</h3>
-            <p style="text-align:center; font-size:0.8rem; color:#94a3b8; margin-bottom:15px;">Enjoy 100% Ad-Free Direct Ultra HD Streaming</p>
+    <div class="modal-bg" id="subModal">
+        <div class="modal-box">
+            <h3 style="color:#f59e0b; text-align:center; font-size:1.1rem;">👑 Remove Ads / VIP Pass</h3>
+            <p style="text-align:center; font-size:0.75rem; color:#9ca3af; margin-bottom:12px;">Fast & Smooth Direct Ad-Free Streaming</p>
 
-            <div class="plan-card">
+            <div class="plan-box">
                 <div>
-                    <strong style="color:#fff;">Monthly Pass</strong><br>
-                    <small style="color:#94a3b8;">No Ads for 30 Days</small>
+                    <strong style="font-size:0.85rem;">Monthly Pass</strong><br>
+                    <small style="color:#6b7280; font-size:0.7rem;">30 Days Ad-Free</small>
                 </div>
-                <button class="btn btn-gold" onclick="selectPlan('Monthly Plan', 99)">₹99 Buy</button>
+                <button class="btn-sm btn-vip" onclick="selectPlan('Monthly', 99)">₹99 Buy</button>
             </div>
 
-            <div class="plan-card">
+            <div class="plan-box">
                 <div>
-                    <strong style="color:#fff;">Yearly Pass</strong><br>
-                    <small style="color:#94a3b8;">No Ads for 365 Days</small>
+                    <strong style="font-size:0.85rem;">Yearly Pass</strong><br>
+                    <small style="color:#6b7280; font-size:0.7rem;">365 Days Ad-Free</small>
                 </div>
-                <button class="btn btn-gold" onclick="selectPlan('Yearly Plan', 499)">₹499 Buy</button>
+                <button class="btn-sm btn-vip" onclick="selectPlan('Yearly', 499)">₹499 Buy</button>
             </div>
 
             <div id="paymentArea" style="display:none;">
-                <h4 style="color:#3b82f6; margin-top:10px;">Direct Owner Bank Transfer:</h4>
-                <div class="bank-details-box">
-                    <p><strong>Bank Name:</strong> <span id="dispBank">SBI Bank</span></p>
-                    <p><strong>Account No:</strong> <span id="dispAcc">1234567890</span></p>
-                    <p><strong>IFSC Code:</strong> <span id="dispIfsc">SBIN000123</span></p>
+                <h4 style="color:#38bdf8; font-size:0.85rem; margin-top:8px;">Direct Owner Payment Details:</h4>
+                <div class="bank-info">
+                    <p><strong>Bank:</strong> <span id="dispBank">SBI</span></p>
+                    <p><strong>Account:</strong> <span id="dispAcc">Setup Required</span></p>
+                    <p><strong>IFSC:</strong> <span id="dispIfsc">SBIN000000</span></p>
                     <p><strong>UPI ID:</strong> <span id="dispUpi" style="color:#f59e0b;">owner@upi</span></p>
                 </div>
 
-                <p style="font-size:0.75rem; color:#f43f5e;">Payment karne ke baad screenshot upload karein:</p>
-                <input type="text" id="txnId" class="input-box" placeholder="Enter Transaction ID / UTR No">
-                <input type="file" id="payProof" class="input-box" accept="image/*">
-                <button class="submit-btn" style="background:#10b981;" onclick="submitPayment()">Submit Proof For Approval</button>
+                <p style="font-size:0.72rem; color:#e11d48;">Payment ke baad UTR/Txn ID fill karein:</p>
+                <input type="text" id="txnId" class="form-input" placeholder="Transaction ID / UTR Number">
+                <button class="btn-action" style="background:#10b981;" onclick="submitPayment()">Submit For Approval</button>
             </div>
 
-            <button class="submit-btn" style="background:transparent; border:1px solid #64748b; margin-top:10px;" onclick="closeSubModal()">Close</button>
+            <button class="btn-action" style="background:transparent; border:1px solid #374151; margin-top:8px;" onclick="closeSubModal()">Close</button>
         </div>
     </div>
 
-    <div class="modal" id="ownerModal">
-        <div class="modal-content">
-            <h3 style="color:#3b82f6;">Owner Admin Portal</h3>
+    <div class="modal-bg" id="ownerModal">
+        <div class="modal-box">
+            <h3 style="color:#38bdf8; font-size:1.1rem;">Owner Control Panel</h3>
             
             <div id="loginForm">
-                <input type="password" id="passCode" class="input-box" placeholder="Enter Owner Password">
-                <button class="submit-btn" onclick="loginOwner()">Access Portal</button>
+                <input type="password" id="passCode" class="form-input" placeholder="Owner Security Password">
+                <button class="btn-action" onclick="loginOwner()">Login</button>
             </div>
 
             <div id="dashboard" style="display: none;">
-                <h4 style="color:#f59e0b; margin: 10px 0 5px;">Bank & UPI Setup (Payment Receive karne ke liye)</h4>
-                <input type="text" id="setBank" class="input-box" placeholder="Bank Name (e.g. SBI)">
-                <input type="text" id="setAcc" class="input-box" placeholder="Account Number">
-                <input type="text" id="setIfsc" class="input-box" placeholder="IFSC Code">
-                <input type="text" id="setUpi" class="input-box" placeholder="UPI ID (e.g. 9876543210@paytm)">
-                <button class="submit-btn" style="background:#f59e0b; color:#000;" onclick="saveOwnerBank()">Save Payment Settings</button>
+                <h4 style="color:#f59e0b; font-size:0.85rem; margin-top:6px;">Direct Bank & UPI Details</h4>
+                <input type="text" id="setBank" class="form-input" placeholder="Bank Name (e.g. SBI)">
+                <input type="text" id="setAcc" class="form-input" placeholder="Account Number">
+                <input type="text" id="setIfsc" class="form-input" placeholder="IFSC Code">
+                <input type="text" id="setUpi" class="form-input" placeholder="UPI ID">
+                <button class="btn-action" style="background:#f59e0b; color:#000;" onclick="saveOwnerBank()">Save Bank Info</button>
 
-                <h4 style="color:#f43f5e; margin: 20px 0 5px;">Add New Movie / Series</h4>
-                <input type="text" id="vTitle" class="input-box" placeholder="Video Title">
-                <select id="vCategory" class="input-box">
+                <h4 style="color:#e11d48; font-size:0.85rem; margin-top:16px;">Add New Content</h4>
+                <input type="text" id="vTitle" class="form-input" placeholder="Content Title">
+                <select id="vCategory" class="form-input">
                     <option value="movie">Movie</option>
                     <option value="anime">Anime</option>
                     <option value="series">Web Series</option>
                     <option value="cartoon">Cartoon</option>
                 </select>
-                <input type="text" id="vPoster" class="input-box" placeholder="Poster Image URL">
-                <input type="text" id="vUrl" class="input-box" placeholder="Video / Embed Link">
-                <button class="submit-btn" style="background:#3b82f6;" onclick="addNewVideo()">Publish Video</button>
+                <input type="text" id="vPoster" class="form-input" placeholder="Poster Image Link (URL)">
+                <input type="text" id="vUrl" class="form-input" placeholder="Video / Embed Link">
+                <button class="btn-action" style="background:#38bdf8;" onclick="addNewVideo()">Publish Content</button>
 
-                <h4 style="color:#10b981; margin: 20px 0 5px;">AdSense Ads Script</h4>
-                <textarea id="adCodeInput" class="input-box" style="height:60px;" placeholder="Paste AdSense Code"></textarea>
-                <button class="submit-btn" style="background:#10b981;" onclick="saveAdSense()">Save AdSense Code</button>
+                <h4 style="color:#10b981; font-size:0.85rem; margin-top:16px;">AdSense Code Setup</h4>
+                <textarea id="adCodeInput" class="form-input" style="height:50px;" placeholder="Paste AdSense Script"></textarea>
+                <button class="btn-action" style="background:#10b981;" onclick="saveAdSense()">Save AdSense</button>
             </div>
 
-            <button class="submit-btn" style="background:transparent; border:1px solid #64748b; margin-top:10px;" onclick="closeOwnerModal()">Close</button>
+            <button class="btn-action" style="background:transparent; border:1px solid #374151; margin-top:8px;" onclick="closeOwnerModal()">Close</button>
         </div>
     </div>
 
     <script>
-        let selectedPlanName = "";
-        let selectedPlanCost = 0;
-
-        let videos = JSON.parse(localStorage.getItem('nexus_videos')) || [
-            { id: 1, title: "Cyberpunk Animated Stream", category: "anime", poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 2, title: "Sci-Fi Space Movie", category: "movie", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500", url: "https://www.youtube.com/embed/L_LUpnjgPso" }
+        let videos = JSON.parse(localStorage.getItem('cinema_videos')) || [
+            { id: 1, title: "Cyberpunk Animated Stream", category: "anime", poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+            { id: 2, title: "Sci-Fi Space Movie", category: "movie", poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400", url: "https://www.youtube.com/embed/L_LUpnjgPso" }
         ];
 
         function renderGrid(filter = 'all') {
@@ -336,17 +359,17 @@
             const filtered = filter === 'all' ? videos : videos.filter(v => v.category === filter);
 
             if(filtered.length === 0) {
-                grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#64748b; padding:30px;">Koi content nahi mila.</p>`;
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#6b7280; padding:20px; font-size:0.85rem;">Koi content available nahi hai.</p>`;
                 return;
             }
 
             filtered.forEach(v => {
                 grid.innerHTML += `
-                    <div class="card" onclick="playVideo('${v.url}', '${v.title}', '${v.category}')">
-                        <img src="${v.poster}" class="card-thumb" alt="poster">
-                        <div class="card-body">
-                            <div class="card-title">${v.title}</div>
-                            <div class="card-type">${v.category}</div>
+                    <div class="media-card" onclick="playVideo('${v.url}', '${v.title}', '${v.category}')">
+                        <img src="${v.poster}" class="media-thumb" loading="lazy" alt="poster">
+                        <div class="media-info">
+                            <div class="media-title">${v.title}</div>
+                            <div class="media-tag">${v.category}</div>
                         </div>
                     </div>
                 `;
@@ -354,9 +377,9 @@
         }
 
         function playVideo(url, title, category) {
-            document.getElementById('playerSection').style.display = 'block';
+            document.getElementById('playerWrapper').style.display = 'block';
             document.getElementById('currentTitle').innerText = title;
-            document.getElementById('currentCategory').innerText = category.toUpperCase();
+            document.getElementById('currentCat').innerText = category.toUpperCase();
 
             const vBox = document.getElementById('videoBox');
             if (url.includes('youtube.com') || url.includes('embed')) {
@@ -368,7 +391,7 @@
         }
 
         function filterCategory(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderGrid(cat);
         }
@@ -376,24 +399,22 @@
         /* Subscription & Direct Payment logic */
         function openSubModal() {
             document.getElementById('subModal').style.display = 'flex';
-            document.getElementById('dispBank').innerText = localStorage.getItem('nx_bank') || 'SBI Bank';
-            document.getElementById('dispAcc').innerText = localStorage.getItem('nx_acc') || 'Direct Bank Setup Required';
-            document.getElementById('dispIfsc').innerText = localStorage.getItem('nx_ifsc') || 'SBIN000000';
-            document.getElementById('dispUpi').innerText = localStorage.getItem('nx_upi') || 'owner@upi';
+            document.getElementById('dispBank').innerText = localStorage.getItem('cinema_bank') || 'SBI Bank';
+            document.getElementById('dispAcc').innerText = localStorage.getItem('cinema_acc') || 'Not Set';
+            document.getElementById('dispIfsc').innerText = localStorage.getItem('cinema_ifsc') || 'SBIN000000';
+            document.getElementById('dispUpi').innerText = localStorage.getItem('cinema_upi') || 'owner@upi';
         }
 
         function closeSubModal() { document.getElementById('subModal').style.display = 'none'; }
 
         function selectPlan(pName, cost) {
-            selectedPlanName = pName;
-            selectedPlanCost = cost;
             document.getElementById('paymentArea').style.display = 'block';
         }
 
         function submitPayment() {
             const txn = document.getElementById('txnId').value;
-            if(!txn) { alert("Transaction ID zaroori hai!"); return; }
-            alert("Aapka Payment Proof submit ho gaya hai! Owner verification ke baad aapka Ad-Free VIP Plan activate kar diya jayega.");
+            if(!txn) { alert("Transaction ID bharein!"); return; }
+            alert("Payment proof submit ho gaya hai! Owner verification ke baad Ad-Free VIP Pass activate ho jayega.");
             closeSubModal();
         }
 
@@ -405,19 +426,19 @@
             if (document.getElementById('passCode').value === "Nadeem@2002") {
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('setBank').value = localStorage.getItem('nx_bank') || '';
-                document.getElementById('setAcc').value = localStorage.getItem('nx_acc') || '';
-                document.getElementById('setIfsc').value = localStorage.getItem('nx_ifsc') || '';
-                document.getElementById('setUpi').value = localStorage.getItem('nx_upi') || '';
+                document.getElementById('setBank').value = localStorage.getItem('cinema_bank') || '';
+                document.getElementById('setAcc').value = localStorage.getItem('cinema_acc') || '';
+                document.getElementById('setIfsc').value = localStorage.getItem('cinema_ifsc') || '';
+                document.getElementById('setUpi').value = localStorage.getItem('cinema_upi') || '';
             } else { alert("Galat Owner Password!"); }
         }
 
         function saveOwnerBank() {
-            localStorage.setItem('nx_bank', document.getElementById('setBank').value);
-            localStorage.setItem('nx_acc', document.getElementById('setAcc').value);
-            localStorage.setItem('nx_ifsc', document.getElementById('setIfsc').value);
-            localStorage.setItem('nx_upi', document.getElementById('setUpi').value);
-            alert("Aapki Bank & UPI details save ho gayi hain! Ab user subscription ka paisa seedhe aapke account me jayega.");
+            localStorage.setItem('cinema_bank', document.getElementById('setBank').value);
+            localStorage.setItem('cinema_acc', document.getElementById('setAcc').value);
+            localStorage.setItem('cinema_ifsc', document.getElementById('setIfsc').value);
+            localStorage.setItem('cinema_upi', document.getElementById('setUpi').value);
+            alert("Bank & UPI Details save ho gayi hain!");
         }
 
         function addNewVideo() {
@@ -426,15 +447,15 @@
             const poster = document.getElementById('vPoster').value;
             const url = document.getElementById('vUrl').value;
 
-            if(!title || !url) { alert("Title aur Video Link required hain!"); return; }
+            if(!title || !url) { alert("Title aur Video Link zaroori hain!"); return; }
 
             videos.unshift({
                 id: Date.now(), title, category,
-                poster: poster || 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500', url
+                poster: poster || 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400', url
             });
 
-            localStorage.setItem('nexus_videos', JSON.stringify(videos));
-            alert("Video successfully publish ho gayi!");
+            localStorage.setItem('cinema_videos', JSON.stringify(videos));
+            alert("Content add ho gaya!");
             renderGrid();
             closeOwnerModal();
         }
@@ -442,16 +463,16 @@
         function saveAdSense() {
             const code = document.getElementById('adCodeInput').value;
             if(code) {
-                localStorage.setItem('nexus_ads', code);
+                localStorage.setItem('cinema_ads', code);
                 document.getElementById('topAdArea').innerHTML = code;
                 document.getElementById('bottomAdArea').innerHTML = code;
-                alert("AdSense Ads Code update ho gaya!");
+                alert("AdSense script save ho gayi!");
             }
         }
 
         window.onload = () => {
             renderGrid();
-            const savedAds = localStorage.getItem('nexus_ads');
+            const savedAds = localStorage.getItem('cinema_ads');
             if(savedAds) {
                 document.getElementById('topAdArea').innerHTML = savedAds;
                 document.getElementById('bottomAdArea').innerHTML = savedAds;
