@@ -1,156 +1,338 @@
-<!-- VIP Subscription Payment Modal -->
-<div id="paymentModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP Subscription & Content System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d0d11;
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* Demo Header & Trigger Button */
+    .header-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .btn-vip-header {
+      background: linear-gradient(45deg, #8b5cf6, #ec4899);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Content Grid (50% Free / 50% VIP Demo) */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #18181f;
+      border: 1px solid #282834;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .card-title { font-size: 18px; margin-bottom: 10px; }
+    .badge-free { background: #22c55e; color: black; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
+    .badge-vip { background: #eab308; color: black; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
     
-    <h2>👑 VIP Subscription (No Ads)</h2>
-    <p class="sub-title">Scan QR code using any UPI app to complete payment</p>
+    .btn-action {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-watch { background: #3b82f6; color: white; }
+    .btn-lock { background: #8b5cf6; color: white; }
+
+    /* Modal Overlay */
+    .modal {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 1000;
+    }
+    .wide-modal {
+      background: #121215;
+      color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 850px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+    .close-btn {
+      position: absolute;
+      top: 14px; right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #888;
+    }
+    .sub-title {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    /* Subscription Cards */
+    .plans-container {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .plan-card {
+      background: #1c1c22;
+      border: 1px solid #2e2e38;
+      border-radius: 12px;
+      padding: 20px;
+      flex: 1;
+      min-width: 220px;
+      max-width: 260px;
+      text-align: center;
+      position: relative;
+    }
+    .vip-plan { border: 2px solid #8b5cf6; background: #181528; }
+    .plan-tag {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #333;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .vip-tag { background: #8b5cf6; color: white; }
+    .best-tag { background: #eab308; color: black; }
+    .price { font-size: 26px; font-weight: bold; margin: 12px 0; }
+    .price span { font-size: 12px; color: #aaa; font-weight: normal; }
+    .features { list-style: none; padding: 0; font-size: 13px; text-align: left; margin-bottom: 20px; }
+    .features li { margin-bottom: 8px; color: #ddd; }
+    .btn-plan { width: 100%; padding: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+    .btn-current { background: #333; color: #777; }
+    .btn-upgrade { background: #8b5cf6; color: white; transition: 0.2s; }
+    .btn-upgrade:hover { background: #7c3aed; }
+
+    /* Payment & QR Section */
+    .qr-payment-section {
+      margin-top: 24px;
+      background: #18181f;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .qr-container img {
+      width: 200px; height: 200px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border: 2px solid #333;
+    }
+    .payee-name { font-size: 12px; color: #aaa; margin-bottom: 12px; }
+    .upi-copy-box {
+      background: #252530;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 320px;
+      margin: 12px auto;
+    }
+    .btn-copy { background: #8b5cf6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .divider { border: 0; height: 1px; background: #333; margin: 20px 0; }
     
-    <!-- QR Code Section -->
-    <div class="qr-container">
-      <img src="YOUR_QR_CODE_IMAGE_PATH.png" alt="Payment QR Code" id="paymentQrCode">
-      <p class="payee-name">Accepting payments via PhonePe, Google Pay, Paytm & BHIM</p>
-    </div>
+    #paymentVerifyForm { max-width: 320px; margin: 0 auto; text-align: left; }
+    #paymentVerifyForm label { font-size: 12px; color: #bbb; display: block; margin-bottom: 6px; }
+    #paymentVerifyForm input {
+      width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #444; background: #0b0b0d; color: #fff; box-sizing: border-box; margin-bottom: 10px;
+    }
+    .btn-submit { width: 100%; background: #22c55e; color: white; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body>
 
-    <!-- UPI ID Copy Section -->
-    <div class="upi-copy-box">
-      <span>UPI ID: <strong id="upiIdText">yourname@upi</strong></span>
-      <button onclick="copyUpiId()" class="btn-copy">Copy UPI</button>
-    </div>
-
-    <hr class="divider">
-
-    <!-- Payment Verification Form -->
-    <form id="paymentVerifyForm" onsubmit="submitPaymentVerification(event)">
-      <label for="utrNumber">Enter 12-Digit Transaction / UTR ID:</label>
-      <input 
-        type="text" 
-        id="utrNumber" 
-        name="utrNumber" 
-        placeholder="e.g. 423456789012" 
-        required 
-        pattern="[0-9]{12}" 
-        title="Please enter a valid 12-digit UTR/Transaction number"
-      >
-      <button type="submit" class="btn-submit">Submit for Verification</button>
-    </form>
+  <!-- Top Navigation Header Button -->
+  <div class="header-container">
+    <button class="btn-vip-header" onclick="openSubscriptionModal()">👑 Upgrade to VIP Subscription</button>
   </div>
-</div>
 
-<style>
-  .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    font-family: Arial, sans-serif;
-  }
-  .modal-content {
-    background: #18181c;
-    color: #ffffff;
-    padding: 24px;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    position: relative;
-  }
-  .close-btn {
-    position: absolute;
-    top: 12px; right: 16px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaaaaa;
-  }
-  .sub-title {
-    font-size: 13px;
-    color: #bbbbbb;
-    margin-bottom: 16px;
-  }
-  .qr-container img {
-    width: 220px;
-    height: 220px;
-    border-radius: 12px;
-    border: 2px solid #333;
-  }
-  .payee-name {
-    font-size: 12px;
-    color: #888888;
-    margin: 8px 0 16px;
-  }
-  .upi-copy-box {
-    background: #25252b;
-    padding: 10px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-  }
-  .btn-copy {
-    background: #673ab7;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .divider {
-    border: 0;
-    height: 1px;
-    background: #333;
-    margin: 20px 0;
-  }
-  #paymentVerifyForm label {
-    display: block;
-    font-size: 13px;
-    margin-bottom: 8px;
-    text-align: left;
-    color: #dddddd;
-  }
-  #paymentVerifyForm input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #444;
-    background: #0f0f12;
-    color: #fff;
-    box-sizing: border-box;
-    margin-bottom: 12px;
-  }
-  .btn-submit {
-    width: 100%;
-    background: #4caf50;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 15px;
-  }
-</style>
+  <!-- Website Content Grid (50% Free + 50% VIP Locked) -->
+  <div class="content-grid">
+    <!-- Free Items -->
+    <div class="card">
+      <span class="badge-free">FREE</span>
+      <h3 class="card-title">Free Content Module 1</h3>
+      <button class="btn-action btn-watch">Access Now</button>
+    </div>
+    <div class="card">
+      <span class="badge-free">FREE</span>
+      <h3 class="card-title">Free Content Module 2</h3>
+      <button class="btn-action btn-watch">Access Now</button>
+    </div>
 
-<script>
-  function copyUpiId() {
-    const upiText = document.getElementById("upiIdText").innerText;
-    navigator.clipboard.writeText(upiText);
-    alert("UPI ID Copied: " + upiText);
-  }
+    <!-- VIP Paid Locked Items -->
+    <div class="card">
+      <span class="badge-vip">VIP ONLY</span>
+      <h3 class="card-title">Premium Exclusive 1 🔒</h3>
+      <button class="btn-action btn-lock" onclick="openSubscriptionModal()">Unlock with VIP</button>
+    </div>
+    <div class="card">
+      <span class="badge-vip">VIP ONLY</span>
+      <h3 class="card-title">Premium Exclusive 2 🔒</h3>
+      <button class="btn-action btn-lock" onclick="openSubscriptionModal()">Unlock with VIP</button>
+    </div>
+  </div>
 
-  function closePaymentModal() {
-    document.getElementById("paymentModal").style.display = "none";
-  }
+  <!-- Modal Component -->
+  <div id="subscriptionModal" class="modal">
+    <div class="modal-content wide-modal">
+      <span class="close-btn" onclick="closeSubscriptionModal()">&times;</span>
+      
+      <h2 style="text-align: center; margin: 0;">Choose Your VIP Plan</h2>
+      <p class="sub-title">50% Content is free! Upgrade for 100% full ad-free access.</p>
 
-  function submitPaymentVerification(event) {
-    event.preventDefault();
-    const utr = document.getElementById("utrNumber").value;
-    alert("Payment submitted for verification. UTR: " + utr);
-    closePaymentModal();
-  }
-</script>
+      <!-- Pricing Plans -->
+      <div class="plans-container">
+        
+        <!-- Free Plan -->
+        <div class="plan-card">
+          <div class="plan-tag">BASIC</div>
+          <h3>Free Member</h3>
+          <div class="price">₹0 <span>/ forever</span></div>
+          <ul class="features">
+            <li>✅ Access 50% Free Content</li>
+            <li>✅ Standard Access</li>
+            <li>❌ Ad-Supported</li>
+            <li>❌ VIP Content Locked</li>
+          </ul>
+          <button class="btn-plan btn-current" disabled>Current Plan</button>
+        </div>
+
+        <!-- VIP Monthly Plan -->
+        <div class="plan-card vip-plan">
+          <div class="plan-tag vip-tag">RECOMMENDED</div>
+          <h3>VIP Monthly</h3>
+          <div class="price">₹99 <span>/ month</span></div>
+          <ul class="features">
+            <li>⚡ 100% Full Access</li>
+            <li>🚫 100% Ad-Free</li>
+            <li>🎥 HD Quality</li>
+            <li>👑 VIP Badge</li>
+          </ul>
+          <button class="btn-plan btn-upgrade" onclick="openQrPayment(99, 'VIP Monthly')">Upgrade to VIP</button>
+        </div>
+
+        <!-- VIP Yearly Plan -->
+        <div class="plan-card">
+          <div class="plan-tag best-tag">BEST VALUE</div>
+          <h3>VIP Yearly</h3>
+          <div class="price">₹499 <span>/ year</span></div>
+          <ul class="features">
+            <li>⚡ 100% Full Access</li>
+            <li>🚫 100% Ad-Free</li>
+            <li>⚡ Priority Support</li>
+            <li>💰 Save over 50%</li>
+          </ul>
+          <button class="btn-plan btn-upgrade" onclick="openQrPayment(499, 'VIP Yearly')">Get Yearly VIP</button>
+        </div>
+
+      </div>
+
+      <!-- Payment / QR Section -->
+      <div id="qrPaymentSection" class="qr-payment-section" style="display:none;">
+        <hr class="divider">
+        <h3 id="selectedPlanTitle" style="margin: 0 0 6px 0;">Complete Your VIP Payment</h3>
+        <p class="pay-amount" style="margin: 0 0 16px 0;">Amount to Pay: <strong id="payAmountText" style="color:#22c55e;">₹99</strong></p>
+
+        <div class="qr-container">
+          <!-- Live QR Code generated for UPI ID: Nb2525@ibl -->
+          <img id="paymentQrCode" src="" alt="Payment QR Code">
+          <p class="payee-name">Scan with PhonePe, Google Pay, Paytm, or BHIM</p>
+        </div>
+
+        <div class="upi-copy-box">
+          <span>UPI ID: <strong id="upiIdText">Nb2525@ibl</strong></span>
+          <button onclick="copyUpiId()" class="btn-copy">Copy UPI</button>
+        </div>
+
+        <form id="paymentVerifyForm" onsubmit="submitPaymentVerification(event)">
+          <label for="utrNumber">Enter 12-Digit Transaction / UTR ID after payment:</label>
+          <input 
+            type="text" 
+            id="utrNumber" 
+            placeholder="e.g. 423456789012" 
+            required 
+            pattern="[0-9]{12}" 
+            title="Please enter valid 12-digit UTR number"
+          >
+          <button type="submit" class="btn-submit">Submit for Verification</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const userUpiId = "Nb2525@ibl";
+
+    function openSubscriptionModal() {
+      document.getElementById("subscriptionModal").style.display = "flex";
+    }
+
+    function closeSubscriptionModal() {
+      document.getElementById("subscriptionModal").style.display = "none";
+      document.getElementById("qrPaymentSection").style.display = "none";
+    }
+
+    function openQrPayment(amount, planName) {
+      document.getElementById("qrPaymentSection").style.display = "block";
+      document.getElementById("selectedPlanTitle").innerText = "Payment for " + planName;
+      document.getElementById("payAmountText").innerText = "₹" + amount;
+      
+      // Dynamic UPI QR Code URL Generation
+      const upiUrl = `upi://pay?pa=${userUpiId}&pn=VIP%20Payment&am=${amount}&cu=INR`;
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+      
+      document.getElementById("paymentQrCode").src = qrApiUrl;
+      document.getElementById("qrPaymentSection").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyUpiId() {
+      const upiText = document.getElementById("upiIdText").innerText;
+      navigator.clipboard.writeText(upiText);
+      alert("UPI ID Copied: " + upiText);
+    }
+
+    function submitPaymentVerification(event) {
+      event.preventDefault();
+      const utr = document.getElementById("utrNumber").value;
+      alert("Transaction ID (" + utr + ") received successfully! Access will be updated shortly.");
+      closeSubscriptionModal();
+    }
+  </script>
+</body>
+</html>
