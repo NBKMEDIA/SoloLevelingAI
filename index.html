@@ -1,231 +1,500 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBKMedia - Free Movies, Anime, Web Series & Content Hub</title>
+    <title>Solo Leveling AI System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #0b0e14; color: #e2e8f0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        
-        /* Header */
-        header { width: 100%; background: #131722; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff0055; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .logo { font-size: 22px; font-weight: 800; color: #ffffff; text-decoration: none; }
-        .logo span { color: #ff0055; }
-        .header-actions { display: flex; gap: 8px; align-items: center; }
-        .tg-btn { background: #229ED9; color: #fff; font-size: 11px; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-weight: bold; }
-        .free-badge { background: #ff0055; color: #fff; font-size: 10px; padding: 4px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; }
+        :root {
+            --bg-color: #050811;
+            --panel-bg: rgba(13, 22, 41, 0.85);
+            --neon-blue: #00f0ff;
+            --neon-purple: #7000ff;
+            --gold: #ffd700;
+            --text-color: #e0f7fc;
+            --border-glow: 0 0 15px rgba(0, 240, 255, 0.4);
+        }
 
-        .container { width: 100%; max-width: 650px; padding: 15px; flex: 1; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
 
-        /* Ad Banner Placeholder */
-        .ad-container { width: 100%; background: #161b26; border: 1px dashed #ff0055; border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 15px; color: #94a3b8; font-size: 12px; }
+        body {
+            background: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(112, 0, 255, 0.1) 0%, transparent 50%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Owner Control Dashboard */
-        .owner-panel { background: #161b26; border: 2px solid #10b981; border-radius: 8px; padding: 15px; margin-bottom: 20px; display: none; }
-        .owner-panel h4 { color: #10b981; font-size: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        
-        .admin-section-title { font-size: 12px; font-weight: bold; color: #38bdf8; margin: 10px 0 6px 0; border-bottom: 1px solid #2a3245; padding-bottom: 4px; }
-        .quick-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-        .tool-btn { background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 6px 10px; border-radius: 6px; font-size: 11px; text-decoration: none; font-weight: bold; flex: 1; text-align: center; min-width: 120px; }
-        .tool-btn.bank { border-color: #f59e0b; color: #f59e0b; }
+        h1, h2, h3, .system-header {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-        .input-group { background: #0b0e14; padding: 10px; border-radius: 6px; border: 1px solid #2a3245; margin-bottom: 10px; }
-        .input-box, select { width: 100%; padding: 9px; margin-top: 4px; margin-bottom: 8px; border-radius: 4px; border: 1px solid #2a3245; background: #161b26; color: #fff; font-size: 12px; outline: none; }
-        .panel-btn { background: #10b981; color: #fff; padding: 10px; border-radius: 4px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; width: 100%; margin-bottom: 6px; }
-        .clear-btn { background: #ef4444; }
-        .close-panel-btn { background: #334155; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; }
+        /* Top Navigation & Header */
+        header {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: var(--panel-bg);
+            border: 1px solid var(--neon-blue);
+            box-shadow: var(--border-glow);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
 
-        /* Search & Categories */
-        .search-box { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #2a3245; background: #161b26; color: #fff; font-size: 13px; margin-bottom: 12px; outline: none; }
-        .category-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
-        .tab-btn { background: #161b26; color: #94a3b8; border: 1px solid #2a3245; padding: 7px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; white-space: nowrap; }
-        .tab-btn.active { background: #ff0055; color: #fff; border-color: #ff0055; font-weight: bold; }
+        .system-title {
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
 
-        /* Video List */
-        .video-card { background: #161b26; border-radius: 8px; border: 1px solid #2a3245; margin-bottom: 10px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        .video-title { font-size: 14px; font-weight: 600; color: #e2e8f0; }
-        .category-tag { font-size: 10px; color: #38bdf8; background: #0b0e14; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 5px; }
-        .btn-link { background: #ff0055; color: #ffffff; padding: 8px 14px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 12px; }
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
 
-        /* Footer */
-        footer { width: 100%; background: #131722; padding: 15px; text-align: center; border-top: 1px solid #2a3245; margin-top: 20px; font-size: 11px; color: #64748b; }
-        .owner-login-link { color: #38bdf8; text-decoration: none; cursor: pointer; font-weight: bold; margin-top: 6px; display: inline-block; border: 1px dashed #38bdf8; padding: 4px 10px; border-radius: 4px; }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value {
+            color: var(--gold);
+        }
+
+        /* Layout Grid */
+        .grid-container {
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .panel h2 {
+            color: var(--neon-blue);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Task System */
+        .task-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--neon-purple);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .task-title {
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .task-desc {
+            font-size: 0.95rem;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+
+        .task-reward {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            border: none;
+            color: #fff;
+            padding: 10px 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 15px var(--neon-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #d4af37, #ffd700);
+            color: #000;
+        }
+
+        /* Store Items */
+        .store-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        /* Ad Banners Placeholders */
+        .ad-container {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            text-align: center;
+            margin: 15px 0;
+            border-radius: 6px;
+            color: #718096;
+            font-size: 0.85rem;
+        }
+
+        /* Admin Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--bg-color);
+            border: 2px solid var(--neon-blue);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 0 25px var(--neon-blue);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 15px;
+            background: #0d1629;
+            border: 1px solid var(--neon-blue);
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        /* Canvas Certificate */
+        #certCanvas {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">NBK<span>Media</span></a>
-        <div class="header-actions">
-            <a href="https://t.me/yourchannel" target="_blank" class="tg-btn">✈️ Join Telegram</a>
-            <span class="free-badge">Free</span>
+        <div class="system-title">SOLO LEVELING AI</div>
+        <div class="stats-bar">
+            <div class="stat-item">LVL: <span id="levelDisplay" class="stat-value">1</span></div>
+            <div class="stat-item">COINS: <span id="coinDisplay" class="stat-value">0</span></div>
+            <div class="stat-item">TITLE: <span id="titleDisplay" class="stat-value" style="color:var(--neon-blue);">E-Rank Hunter</span></div>
         </div>
     </header>
 
-    <div class="container">
+    <div class="ad-container">
+        [ ADVERTISEMENT SPACE - GOOGLE ADSENSE / MONETIZATION BANNER ]
+    </div>
 
-        <div class="ad-container">📢 Top Banner Space (Monetization Code)</div>
-
-        <!-- Comprehensive Admin Dashboard -->
-        <div id="adminPanel" class="owner-panel">
-            <h4>
-                <span>👑 Boss Nadeem All-In-One Control Center</span>
-                <button onclick="hideAdminPanel()" class="close-panel-btn">✖ Close</button>
-            </h4>
-
-            <!-- Earning & Bank Shortcuts -->
-            <div class="admin-section-title">💰 Earning & Bank Payout Dashboards</div>
-            <div class="quick-tools">
-                <a href="https://shrinkme.io/member/dashboard" target="_blank" class="tool-btn bank">💵 ShrinkMe Earnings / Withdraw</a>
-                <a href="https://publishers.adsterra.com/" target="_blank" class="tool-btn bank">📈 Adsterra Revenue / Payout</a>
-                <a href="https://monetag.com/" target="_blank" class="tool-btn bank">📊 Monetag Dashboard</a>
-            </div>
-
-            <!-- Video Hosting Shortcuts -->
-            <div class="admin-section-title">📹 Video Upload & Hosting Cloud</div>
-            <div class="quick-tools">
-                <a href="https://www.terabox.com/" target="_blank" class="tool-btn">☁️ Upload To TeraBox</a>
-                <a href="https://drive.google.com/" target="_blank" class="tool-btn">📁 Upload To Google Drive</a>
-            </div>
-
-            <!-- Post New Content Form -->
-            <div class="admin-section-title">➕ Publish New Link / Video To Website</div>
-            <div class="input-group">
-                <label style="font-size:11px; color:#38bdf8;">Category:</label>
-                <select id="contentCategory">
-                    <option value="Movies">🎬 Movies</option>
-                    <option value="Web Series">📺 Web Series</option>
-                    <option value="Anime">⚔️ Anime</option>
-                    <option value="Own Video">📹 Personal Video / Reel</option>
-                    <option value="Apps & Other">📱 Apps / Softwares / Links</option>
-                </select>
-
-                <label style="font-size:11px; color:#38bdf8;">Title Name:</label>
-                <input type="text" id="contentTitle" class="input-box" placeholder="e.g. Special Personal Reel / Movie Name">
-                
-                <label style="font-size:11px; color:#38bdf8;">Monetized Short Link / Target Link:</label>
-                <input type="text" id="contentUrl" class="input-box" placeholder="https://shrinkme.io/yourlink">
-            </div>
-            
-            <button onclick="addContentLink()" class="panel-btn">➕ Publish Live To Website</button>
-            <button onclick="clearAllLinks()" class="panel-btn clear-btn">🗑️ Clear All Content Links</button>
+    <div class="grid-container">
+        
+        <div class="panel">
+            <h2>Active Quest Log (AI System)</h2>
+            <div id="questContainer">
+                </div>
+            <button class="btn" onclick="generateTask()">Request New AI Quest</button>
         </div>
 
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search Movies, Anime, Web Series..." onkeyup="filterContent()">
+        <div class="panel">
+            <h2>Equipment & Armory Store</h2>
+            <div id="storeContainer">
+                <div class="store-item">
+                    <div>
+                        <strong>Rasaka's Dagger</strong><br>
+                        <small>ATK +15 | Cost: 100 Coins</small>
+                    </div>
+                    <button class="btn btn-gold" style="width: auto;" onclick="buyItem('Rasaka Dagger', 100)">Buy</button>
+                </div>
+                <div class="store-item">
+                    <div>
+                        <strong>Knight Commander Armor</strong><br>
+                        <small>DEF +40 | Cost: 250 Coins</small>
+                    </div>
+                    <button class="btn btn-gold" style="width: auto;" onclick="buyItem('Commander Armor', 250)">Buy</button>
+                </div>
+            </div>
 
-        <div class="category-tabs">
-            <button class="tab-btn active" onclick="filterCategory('All', this)">All</button>
-            <button class="tab-btn" onclick="filterCategory('Movies', this)">🎬 Movies</button>
-            <button class="tab-btn" onclick="filterCategory('Web Series', this)">📺 Web Series</button>
-            <button class="tab-btn" onclick="filterCategory('Anime', this)">⚔️ Anime</button>
-            <button class="tab-btn" onclick="filterCategory('Own Video', this)">📹 Own Videos</button>
-            <button class="tab-btn" onclick="filterCategory('Apps & Other', this)">📱 Apps/Other</button>
+            <h2 style="margin-top: 20px;">Equipment Inventory</h2>
+            <ul id="inventoryList" style="list-style: none; color: var(--neon-blue);">
+                <li>Basic Hunter Cloths</li>
+            </ul>
         </div>
-
-        <div id="contentList"></div>
-
-        <div class="ad-container" style="margin-top:20px;">📢 Bottom Banner Space</div>
 
     </div>
 
-    <footer>
-        <p>© 2026 NBKMedia - All Rights Reserved</p>
-        <span onclick="triggerOwnerLogin()" class="owner-login-link">🔑 Owner Sign In</span>
-    </footer>
+    <div class="ad-container">
+        [ ADVERTISEMENT SPACE - SPONSORED LINKS / REWARDED ADS ]
+    </div>
+
+    <div style="width: 100%; max-width: 1000px; margin-top: 10px; display: flex; gap: 15px; flex-wrap: wrap;">
+        <button class="btn btn-gold" style="flex: 1;" onclick="downloadCertificate()">Download Hunter License / Certificate</button>
+        <button class="btn" style="flex: 1; background: #2d3748;" onclick="openAdminModal()">System Owner Portal</button>
+    </div>
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--neon-blue); margin-bottom: 15px;">System Owner Login</h2>
+            <div id="loginForm">
+                <input type="password" id="adminPassword" class="input-field" placeholder="Enter Owner Password">
+                <button class="btn" onclick="verifyAdmin()">Access Control</button>
+            </div>
+            <div id="adminPanel" style="display: none;">
+                <h3 style="color: var(--gold); margin-bottom: 10px;">Direct Bank Transfer Details</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 10px;">Configure where ad revenue & store cash purchases will be routed:</p>
+                <input type="text" id="bankName" class="input-field" placeholder="Bank Name (e.g. SBI, HDFC)">
+                <input type="text" id="accountNo" class="input-field" placeholder="Account Number">
+                <input type="text" id="ifscCode" class="input-field" placeholder="IFSC Code">
+                <input type="text" id="upiId" class="input-field" placeholder="Owner UPI ID (e.g. name@upi)">
+                <button class="btn btn-gold" onclick="saveBankDetails()">Save Transfer Settings</button>
+            </div>
+            <button class="btn" style="background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; margin-top: 15px;" onclick="closeAdminModal()">Close</button>
+        </div>
+    </div>
+
+    <canvas id="certCanvas" width="800" height="600"></canvas>
 
     <script>
-        let selectedCategory = "All";
-        const DEFAULT_ITEMS = [
-            { title: "Welcome to NBKMedia - Watch & Download Free Content", url: "#", category: "Movies" }
+        // System Data State
+        let playerState = {
+            level: 1,
+            coins: 0,
+            xp: 0,
+            title: "E-Rank Hunter",
+            inventory: ["Basic Hunter Cloths"]
+        };
+
+        const titles = [
+            "E-Rank Hunter", "D-Rank Raider", "C-Rank Assassin", 
+            "B-Rank Mage", "A-Rank Vanguard", "S-Rank Monarch", "Shadow Monarch"
         ];
 
-        function triggerOwnerLogin() {
-            let pass = prompt("Enter Secret Owner Password:");
-            if (pass === "Nadeem@2002") {
-                document.getElementById("adminPanel").style.display = "block";
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                alert("Welcome Boss Nadeem!");
-            } else if (pass !== null) {
-                alert("Incorrect Password!");
-            }
+        // Dynamic Infinite Task Database Generator
+        const taskPool = [
+            { name: "Daily Push-ups Protocol", desc: "Complete 50 physical strength reps or complete 1 core focus activity.", coins: 50, xp: 50 },
+            { name: "Shadow Dungeon Scouting", desc: "Spend 20 minutes acquiring new technical or tactical knowledge.", coins: 75, xp: 80 },
+            { name: "Mana Control Training", desc: "Maintain absolute focus without digital distraction for 30 minutes.", coins: 100, xp: 120 },
+            { name: "Gate Boss Clearance", desc: "Solve a complex real-world logic puzzle or complete a high-priority work item.", coins: 200, xp: 250 }
+        ];
+
+        let currentTask = null;
+
+        function initGame() {
+            generateTask();
+            updateUI();
         }
 
-        function hideAdminPanel() {
-            document.getElementById("adminPanel").style.display = "none";
-        }
+        function updateUI() {
+            document.getElementById('levelDisplay').innerText = playerState.level;
+            document.getElementById('coinDisplay').innerText = playerState.coins;
+            document.getElementById('titleDisplay').innerText = playerState.title;
 
-        function loadItems() {
-            let saved = localStorage.getItem("nbkmedia_items");
-            let items = saved ? JSON.parse(saved) : DEFAULT_ITEMS;
-            let list = document.getElementById("contentList");
-            let searchQuery = document.getElementById("searchInput").value.toLowerCase().trim();
-            list.innerHTML = "";
-
-            let count = 0;
-            items.forEach(item => {
-                let matchesCategory = (selectedCategory === "All" || item.category === selectedCategory);
-                let matchesSearch = item.title.toLowerCase().includes(searchQuery);
-
-                if (matchesCategory && matchesSearch) {
-                    count++;
-                    let card = document.createElement("div");
-                    card.className = "video-card";
-                    card.innerHTML = `
-                        <div class="video-info">
-                            <div class="video-title">${item.title}</div>
-                            <span class="category-tag">${item.category}</span>
-                        </div>
-                        <a href="${item.url}" target="_blank" class="btn-link">Watch / Get</a>
-                    `;
-                    list.appendChild(card);
-                }
+            // Render Inventory
+            const invList = document.getElementById('inventoryList');
+            invList.innerHTML = '';
+            playerState.inventory.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = "• " + item;
+                invList.appendChild(li);
             });
+        }
 
-            if(count === 0) {
-                list.innerHTML = `<div style="text-align:center; color:#64748b; padding:20px;">No content found.</div>`;
+        function generateTask() {
+            const randomIndex = Math.floor(Math.random() * taskPool.length);
+            currentTask = { ...taskPool[randomIndex] };
+            // Scale difficulty with player level
+            currentTask.coins += (playerState.level - 1) * 20;
+            currentTask.xp += (playerState.level - 1) * 30;
+
+            const container = document.getElementById('questContainer');
+            container.innerHTML = `
+                <div class="task-card">
+                    <div class="task-title">[QUEST] ${currentTask.name}</div>
+                    <div class="task-desc">${currentTask.desc}</div>
+                    <div class="task-reward">REWARD: +${currentTask.coins} Gold Coins | +${currentTask.xp} XP</div>
+                    <button class="btn btn-gold" onclick="completeTask()">Complete System Quest</button>
+                </div>
+            `;
+        }
+
+        function completeTask() {
+            if (!currentTask) return;
+            playerState.coins += currentTask.coins;
+            playerState.xp += currentTask.xp;
+
+            // Check Level Up Condition
+            if (playerState.xp >= playerState.level * 100) {
+                playerState.level += 1;
+                playerState.xp = 0;
+                
+                // Update Title
+                const titleIndex = Math.min(Math.floor(playerState.level / 2), titles.length - 1);
+                playerState.title = titles[titleIndex];
+                
+                alert(`[SYSTEM NOTICE]\nLEVEL UP! You are now Level ${playerState.level}\nNew Rank Title: ${playerState.title}`);
+            } else {
+                alert(`[QUEST COMPLETE]\nEarned ${currentTask.coins} Coins!`);
+            }
+
+            updateUI();
+            generateTask();
+        }
+
+        function buyItem(itemName, cost) {
+            if (playerState.coins >= cost) {
+                playerState.coins -= cost;
+                playerState.inventory.push(itemName);
+                updateUI();
+                alert(`[ITEM ACQUIRED] You bought ${itemName}!`);
+            } else {
+                alert("[SYSTEM ERROR] Insufficient Gold Coins!");
             }
         }
 
-        function addContentLink() {
-            let cat = document.getElementById("contentCategory").value;
-            let title = document.getElementById("contentTitle").value.trim();
-            let url = document.getElementById("contentUrl").value.trim();
-
-            if(!title || !url) {
-                alert("Please enter Title and Link!");
-                return;
-            }
-
-            let saved = localStorage.getItem("nbkmedia_items");
-            let items = saved ? JSON.parse(saved) : [...DEFAULT_ITEMS];
-            items.unshift({ title: title, url: url, category: cat });
-            localStorage.setItem("nbkmedia_items", JSON.stringify(items));
-
-            document.getElementById("contentTitle").value = "";
-            document.getElementById("contentUrl").value = "";
-
-            loadItems();
-            alert("Content Successfully Published!");
+        // Owner Admin Logic
+        function openAdminModal() {
+            document.getElementById('adminModal').style.display = 'flex';
         }
 
-        function filterCategory(cat, btn) {
-            selectedCategory = cat;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            loadItems();
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
         }
 
-        function filterContent() { loadItems(); }
-
-        function clearAllLinks() {
-            if(confirm("Kya aap sabhi links clear karna chahte hain?")) {
-                localStorage.removeItem("nbkmedia_items");
-                loadItems();
+        function verifyAdmin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === "Nadeem@2002") {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                
+                // Load existing details
+                document.getElementById('bankName').value = localStorage.getItem('owner_bank') || '';
+                document.getElementById('accountNo').value = localStorage.getItem('owner_acc') || '';
+                document.getElementById('ifscCode').value = localStorage.getItem('owner_ifsc') || '';
+                document.getElementById('upiId').value = localStorage.getItem('owner_upi') || '';
+            } else {
+                alert("[ACCESS DENIED] Incorrect System Password!");
             }
         }
 
-        window.onload = function() { loadItems(); };
+        function saveBankDetails() {
+            localStorage.setItem('owner_bank', document.getElementById('bankName').value);
+            localStorage.setItem('owner_acc', document.getElementById('accountNo').value);
+            localStorage.setItem('owner_ifsc', document.getElementById('ifscCode').value);
+            localStorage.setItem('owner_upi', document.getElementById('upiId').value);
+            alert("[SYSTEM NOTICE] Owner Bank & Settlement Details Saved Successfully!");
+            closeAdminModal();
+        }
+
+        // Dynamic Hunter Certificate Generator
+        function downloadCertificate() {
+            const canvas = document.getElementById('certCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#050811';
+            ctx.fillRect(0, 0, 800, 600);
+
+            // Border
+            ctx.strokeStyle = '#00f0ff';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, 760, 560);
+            
+            ctx.strokeStyle = '#7000ff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(30, 30, 740, 540);
+
+            // Text Header
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = '32px Orbitron, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('HUNTER ASSOCIATION LICENSE', 400, 100);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '20px Rajdhani, sans-serif';
+            ctx.fillText('OFFICIAL SYSTEM CERTIFICATE', 400, 140);
+
+            // Body Details
+            ctx.fillStyle = '#a0aec0';
+            ctx.font = '18px Rajdhani, sans-serif';
+            ctx.fillText('This is to certify that the player has achieved system advancement:', 400, 220);
+
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '28px Orbitron, sans-serif';
+            ctx.fillText(`CURRENT LEVEL: ${playerState.level}`, 400, 300);
+
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = '24px Orbitron, sans-serif';
+            ctx.fillText(`RANK TITLE: ${playerState.title}`, 400, 360);
+
+            // Footer / Verification Stamp
+            ctx.fillStyle = '#718096';
+            ctx.font = '14px Rajdhani, sans-serif';
+            ctx.fillText('VERIFIED BY SOLO LEVELING AI SYSTEM AUTHORIZATION', 400, 480);
+            ctx.fillText(`Issued Date: ${new Date().toLocaleDateString()}`, 400, 510);
+
+            // Trigger Download
+            const link = document.createElement('a');
+            link.download = `Hunter_Certificate_Lvl${playerState.level}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        window.onload = initGame;
     </script>
 </body>
 </html>
